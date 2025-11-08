@@ -4,9 +4,11 @@ import { SkillTag } from "@/components/SkillTag";
 import { InterpersonalSkills } from "@/components/InterpersonalSkills";
 import { PublishDialog } from "@/components/PublishDialog";
 import { ShareDropdown } from "@/components/ShareDropdown";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Download, Sparkles, Mail, MapPin, Award, Camera } from "lucide-react";
+import { ArrowLeft, Download, Sparkles, Mail, MapPin, Award, Camera, CheckCircle2 } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
 import gridPattern from "@/assets/grid-pattern.png";
 import { useState, useRef } from "react";
@@ -17,6 +19,8 @@ const Profile = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const allSkills = [
     { name: "React.js", category: "hard" as const, confidence: 95 },
@@ -78,6 +82,33 @@ const Profile = () => {
     }
   };
 
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    setDownloadProgress(0);
+
+    // Simulate download progress
+    const duration = 3000; // 3 seconds
+    const steps = 100;
+    const stepDuration = duration / steps;
+
+    for (let i = 0; i <= steps; i++) {
+      await new Promise(resolve => setTimeout(resolve, stepDuration));
+      setDownloadProgress(i);
+    }
+
+    // Show completion
+    toast({
+      title: "Download Complete!",
+      description: "Your profile has been downloaded as PDF",
+    });
+
+    // Reset after a moment
+    setTimeout(() => {
+      setIsDownloading(false);
+      setDownloadProgress(0);
+    }, 1000);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
       {/* Grid pattern overlay */}
@@ -114,10 +145,32 @@ const Profile = () => {
           </div>
 
           <div className="flex gap-3">
-            <Button variant="outline" className="rounded-2xl border-2">
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
+            <ThemeToggle />
+            {isDownloading ? (
+              <div className="flex items-center gap-3 px-4 py-2 rounded-2xl border-2 border-primary bg-primary/5 min-w-[160px]">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-primary">
+                      {downloadProgress === 100 ? 'Complete!' : 'Downloading...'}
+                    </span>
+                    <span className="text-xs font-bold text-primary">{downloadProgress}%</span>
+                  </div>
+                  <Progress value={downloadProgress} className="h-1" />
+                </div>
+                {downloadProgress === 100 && (
+                  <CheckCircle2 className="w-4 h-4 text-green-500 animate-scale-in" />
+                )}
+              </div>
+            ) : (
+              <Button 
+                variant="outline" 
+                className="rounded-2xl border-2 hover:bg-primary/5 hover:border-primary transition-all"
+                onClick={handleDownload}
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download
+              </Button>
+            )}
             <PublishDialog />
             <ShareDropdown />
           </div>

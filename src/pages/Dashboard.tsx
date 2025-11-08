@@ -3,11 +3,11 @@ import { GlassCard } from "@/components/GlassCard";
 import { SkillTag } from "@/components/SkillTag";
 import { SkillProgressBar } from "@/components/SkillProgressBar";
 import { ShareDropdown } from "@/components/ShareDropdown";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, Download, Share2, User, Briefcase, Award, ArrowLeft, Camera } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
-import gridPattern from "@/assets/grid-pattern.png";
 import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -64,19 +64,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
-      {/* Grid pattern overlay */}
-      <div 
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `url(${gridPattern})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 0.1
-        }}
-      />
-      
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle,hsl(var(--accent)/0.1),transparent_70%)] pointer-events-none" />
       
       <div className="relative container mx-auto px-4 py-8">
         {/* Header */}
@@ -98,6 +88,7 @@ const Dashboard = () => {
           </div>
           
           <div className="flex gap-3">
+            <ThemeToggle />
             <Button
               variant="outline"
               className="rounded-2xl border-2"

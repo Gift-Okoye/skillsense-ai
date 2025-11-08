@@ -7,6 +7,7 @@ import Onboarding from "./pages/Onboarding";
 import Upload from "./pages/Upload";
 import Analysis from "./pages/Analysis";
 import Dashboard from "./pages/Dashboard";
+import DashboardEnhanced from "./pages/DashboardEnhanced";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/upload" element={<Upload />} />
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard-enhanced" element={<DashboardEnhanced />} />
           <Route path="/profile" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
