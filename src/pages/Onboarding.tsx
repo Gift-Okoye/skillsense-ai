@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { MessageCircle, Linkedin, Twitter, Facebook } from "lucide-react";
 import heroImage from "@/assets/hero-illustration.jpg";
 import logo from "@/assets/skillsense-logo.png";
 
@@ -14,13 +15,49 @@ const Onboarding = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
       <div className="relative container mx-auto px-4 py-16">
-        {/* Logo */}
-        <div className="flex items-center gap-3 mb-16">
+        {/* Logo & Socials */}
+        <div className="flex items-center justify-between mb-16">
           <img 
             src={logo} 
             alt="SkillSense Logo" 
             className="h-12 w-auto"
           />
+          
+          {/* Social Links */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://discord.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group"
+            >
+              <MessageCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group"
+            >
+              <Linkedin className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group"
+            >
+              <Twitter className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
+            </a>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group"
+            >
+              <Facebook className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
+            </a>
+          </div>
         </div>
 
         {/* Hero Section */}
