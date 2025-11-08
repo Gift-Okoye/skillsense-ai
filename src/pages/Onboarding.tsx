@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { MessageCircle, Linkedin, Twitter, Github, Mail } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import logo from "@/assets/skillsense-logo.png";
+import gridPattern from "@/assets/grid-pattern-onboarding.png";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -16,13 +17,19 @@ const Onboarding = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   return <div className="h-screen overflow-hidden bg-gradient-to-b from-background via-secondary/30 to-background relative">
+      {/* Grid pattern overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${gridPattern})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.1
+        }}
+      />
+      
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
-      
-      {/* Check pattern overlay */}
-      <div className="absolute inset-0 opacity-24 pointer-events-none" style={{
-      backgroundImage: `repeating-conic-gradient(hsl(var(--foreground)) 0% 25%, transparent 0% 50%) 50% / 20px 20px`
-    }} />
       
       <div className="relative container mx-auto px-[80px] py-8 h-full flex flex-col">
         {/* Logo & Socials */}
