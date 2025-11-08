@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { MessageCircle, Linkedin, Twitter, Facebook } from "lucide-react";
+import { MessageCircle, Linkedin, Twitter, Github } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import logo from "@/assets/skillsense-logo.png";
 import { useState } from "react";
@@ -18,7 +18,7 @@ const Onboarding = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
       {/* Check pattern overlay */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
+      <div className="absolute inset-0 opacity-24 pointer-events-none" style={{
       backgroundImage: `repeating-conic-gradient(hsl(var(--foreground)) 0% 25%, transparent 0% 50%) 50% / 20px 20px`
     }} />
       
@@ -38,8 +38,8 @@ const Onboarding = () => {
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group">
               <Twitter className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
             </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group">
-              <Facebook className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group">
+              <Github className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
             </a>
           </div>
         </div>
