@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Download, Sparkles, Mail, MapPin, Award, Camera } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
+import gridPattern from "@/assets/grid-pattern.png";
 import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -78,7 +79,19 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
+      {/* Grid pattern overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${gridPattern})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.1
+        }}
+      />
+      
+      {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
       <div className="relative container mx-auto px-4 py-8">
