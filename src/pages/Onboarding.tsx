@@ -53,7 +53,10 @@ const Onboarding = () => {
               <span className="text-sm font-medium text-primary">AI-Powered Skills Analysis</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-heading font-bold leading-tight">Discover your hidden skills with AI<span className="gradient-text">hidden skills</span> with AI
+            <h1 className="text-5xl lg:text-6xl font-heading font-normal leading-tight">
+              Discover your<br />
+              <span className="text-primary">Hidden <span className="font-playfair italic">Skills</span></span><br />
+              With AI
             </h1>
 
             <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">

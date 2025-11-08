@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         body: ['Montserrat', 'sans-serif'],
         heading: ['Montserrat', 'sans-serif'],
+        'playfair': ['Playfair Display', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
