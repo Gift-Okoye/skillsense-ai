@@ -14,7 +14,7 @@ const Onboarding = () => {
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
-      <div className="relative container mx-auto px-4 py-16">
+      <div className="relative container mx-auto px-[80px] py-16">
         {/* Logo & Socials */}
         <div className="flex items-center justify-between mb-16">
           <img 
@@ -129,36 +129,6 @@ const Onboarding = () => {
           </div>
         </div>
 
-        {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 mt-32 max-w-6xl mx-auto">
-          {[
-            {
-              title: "AI-Powered Analysis",
-              description: "Advanced algorithms identify skills from your experience and achievements",
-            },
-            {
-              title: "Skill Verification",
-              description: "Confidence scores help you understand the strength of each identified skill",
-            },
-            {
-              title: "Beautiful Profiles",
-              description: "Generate professional skill portfolios ready to share with employers",
-            },
-          ].map((feature, index) => (
-            <GlassCard
-              key={index}
-              hover
-              className="animate-fade-in space-y-4"
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              <div className="w-12 h-12 rounded-2xl gradient-primary flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-xl font-heading font-semibold">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-            </GlassCard>
-          ))}
-        </div>
       </div>
     </div>
   );
