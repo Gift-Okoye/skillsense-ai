@@ -26,10 +26,10 @@ export const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="rounded-2xl hover:bg-secondary relative overflow-hidden group"
+      className="rounded-2xl hover:bg-secondary hover:text-foreground relative overflow-hidden group"
     >
-      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100" />
+      <Sun className="h-5 w-5 text-foreground rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-5 w-5 text-foreground rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );
