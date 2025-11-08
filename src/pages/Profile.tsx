@@ -1,18 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { SkillTag } from "@/components/SkillTag";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Download, Share2, Sparkles, Mail, MapPin, Award, Camera } from "lucide-react";
+import { ArrowLeft, Download, Share2, Sparkles, Mail, MapPin, Award } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
-import { useState, useRef } from "react";
-import { useToast } from "@/hooks/use-toast";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const allSkills = [
     { name: "React.js", category: "hard" as const, confidence: 95 },
@@ -28,41 +23,6 @@ const Profile = () => {
     { name: "API Design", category: "inferred" as const, confidence: 80 },
     { name: "Cloud Architecture", category: "inferred" as const, confidence: 72 },
   ];
-
-  const toolsAndTechnology = [
-    { name: "A/B Testing", years: 1 },
-    { name: "Product Designing", years: 4 },
-    { name: "Front End Design", years: 4 },
-    { name: "HTML 5", years: 3 },
-    { name: "CSS", years: 3 },
-    { name: "JavaScript", years: 5 },
-    { name: "Git", years: 4 },
-    { name: "Docker", years: 2 },
-  ];
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "File too large",
-          description: "Please select an image under 5MB",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-        toast({
-          title: "Profile image updated",
-          description: "Your profile image has been changed successfully",
-        });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background">
@@ -108,24 +68,11 @@ const Profile = () => {
             
             <div className="relative pt-8">
               <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
-                <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                  <Avatar className="w-32 h-32 border-4 border-background shadow-lg">
-                    {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
-                    <AvatarFallback className="text-4xl font-bold gradient-primary text-white">
-                      JD
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Camera className="w-8 h-8 text-white" />
-                  </div>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </div>
+                <Avatar className="w-32 h-32 border-4 border-background shadow-lg">
+                  <AvatarFallback className="text-4xl font-bold gradient-primary text-white">
+                    JD
+                  </AvatarFallback>
+                </Avatar>
 
                 <div className="flex-1 space-y-4">
                   <div>
@@ -169,26 +116,8 @@ const Profile = () => {
             </p>
           </GlassCard>
 
-          {/* Tools & Technology */}
-          <GlassCard className="animate-fade-in" style={{ animationDelay: "300ms" }}>
-            <h2 className="text-2xl font-heading font-semibold mb-6">Tools & Technology</h2>
-            <div className="flex flex-wrap gap-3">
-              {toolsAndTechnology.map((tool) => (
-                <div
-                  key={tool.name}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-background/50 transition-smooth hover:scale-105"
-                >
-                  <span className="text-sm font-medium text-foreground">{tool.name.toUpperCase()}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {tool.years} {tool.years === 1 ? 'YEAR' : 'YEARS'}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-
           {/* Skills */}
-          <GlassCard className="animate-fade-in" style={{ animationDelay: "450ms" }}>
+          <GlassCard className="animate-fade-in" style={{ animationDelay: "300ms" }}>
             <h2 className="text-2xl font-heading font-semibold mb-6">Skills Portfolio</h2>
             
             <div className="space-y-8">
