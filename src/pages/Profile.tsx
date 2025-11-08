@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { SkillTag } from "@/components/SkillTag";
+import { InterpersonalSkills } from "@/components/InterpersonalSkills";
+import { PublishDialog } from "@/components/PublishDialog";
+import { ShareDropdown } from "@/components/ShareDropdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Download, Share2, Sparkles, Mail, MapPin, Award, Camera } from "lucide-react";
+import { ArrowLeft, Download, Sparkles, Mail, MapPin, Award, Camera } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
 import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -38,6 +41,16 @@ const Profile = () => {
     { name: "JavaScript", years: 5 },
     { name: "Git", years: 4 },
     { name: "Docker", years: 2 },
+  ];
+
+  const interpersonalSkills = [
+    { name: "Adaptability", rating: 0 },
+    { name: "Leadership", rating: 5 },
+    { name: "Critical Thinking Problem Solving", rating: 0 },
+    { name: "Effective Communication", rating: 0 },
+    { name: "Teamwork Collaboration", rating: 0 },
+    { name: "Time Management", rating: 3 },
+    { name: "Emotional Intelligence", rating: 0 },
   ];
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +89,7 @@ const Profile = () => {
               variant="ghost"
               size="icon"
               onClick={() => navigate("/dashboard")}
-              className="rounded-2xl hover:bg-secondary"
+              className="rounded-2xl hover:bg-secondary hover:text-foreground"
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
@@ -92,10 +105,8 @@ const Profile = () => {
               <Download className="w-4 h-4 mr-2" />
               Download
             </Button>
-            <Button className="gradient-primary text-primary-foreground rounded-2xl hover-glow">
-              <Share2 className="w-4 h-4 mr-2" />
-              Share
-            </Button>
+            <PublishDialog />
+            <ShareDropdown />
           </div>
         </div>
 
@@ -185,6 +196,12 @@ const Profile = () => {
                 </div>
               ))}
             </div>
+          </GlassCard>
+
+          {/* Interpersonal Skills */}
+          <GlassCard className="animate-fade-in" style={{ animationDelay: "375ms" }}>
+            <h2 className="text-2xl font-heading font-semibold mb-6">Interpersonal Skills</h2>
+            <InterpersonalSkills skills={interpersonalSkills} />
           </GlassCard>
 
           {/* Skills */}
