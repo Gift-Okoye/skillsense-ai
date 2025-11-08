@@ -1,9 +1,11 @@
 import { GlassCard } from "@/components/GlassCard";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { Brain, Target, Zap } from "lucide-react";
+import { Brain, Target, Zap, ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/skillsense-logo.png";
+import gridPattern from "@/assets/grid-pattern.png";
+import { Button } from "@/components/ui/button";
 
 const Analysis = () => {
   const navigate = useNavigate();
@@ -24,22 +26,43 @@ const Analysis = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
+      {/* Grid pattern overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${gridPattern})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.1
+        }}
+      />
+      
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
-      <div className="relative container mx-auto px-4">
-        <div className="max-w-2xl mx-auto space-y-12">
-          {/* Logo */}
-          <div className="flex justify-center">
+      <div className="relative container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate("/upload")}
+              className="rounded-2xl hover:bg-secondary hover:text-foreground"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
             <img 
               src={logo} 
               alt="SkillSense Logo" 
-              className="h-14 w-auto animate-pulse-glow"
+              className="h-10 w-auto"
             />
           </div>
+        </div>
 
-          {/* Main Card */}
-          <GlassCard className="text-center space-y-8 animate-scale-in">
+        <div className="flex items-center justify-center min-h-[calc(100vh-120px)]">
+          <div className="max-w-2xl mx-auto space-y-12 w-full">
+            <GlassCard className="text-center space-y-8 animate-scale-in">
             <div className="relative">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-32 h-32 gradient-primary opacity-20 blur-3xl rounded-full animate-pulse-glow" />
@@ -99,7 +122,8 @@ const Analysis = () => {
                 <div className="text-xs text-muted-foreground">Accuracy</div>
               </div>
             </div>
-          </GlassCard>
+            </GlassCard>
+          </div>
         </div>
       </div>
     </div>

@@ -129,7 +129,7 @@ const Upload = () => {
               variant="ghost"
               size="icon"
               onClick={() => navigate("/")}
-              className="rounded-2xl hover:bg-secondary"
+              className="rounded-2xl hover:bg-secondary hover:text-foreground"
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
