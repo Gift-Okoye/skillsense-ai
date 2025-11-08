@@ -205,7 +205,7 @@ const Profile = () => {
                 </div>
 
                 <div className="flex-1 space-y-4">
-                  <div>
+                  <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6">
                     <h1 className="text-4xl font-heading font-bold mb-2">John Doe</h1>
                     <p className="text-xl text-muted-foreground">Senior Software Engineer</p>
                   </div>
