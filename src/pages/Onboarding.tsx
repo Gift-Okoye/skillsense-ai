@@ -47,9 +47,7 @@ const Onboarding = () => {
         </div>
 
         {/* Hero Section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto flex-1 border-l border-r border-transparent" style={{
-          borderImage: 'linear-gradient(to bottom, transparent, hsl(var(--primary)), transparent) 1'
-        }}>
+        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto flex-1">
           {/* Left Content */}
           <div className="space-y-8 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
