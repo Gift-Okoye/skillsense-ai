@@ -70,9 +70,7 @@ const Onboarding = () => {
             </div>
 
             <h1 className="text-5xl lg:text-6xl font-heading font-bold leading-tight">
-              Discover your{" "}
-              <span className="gradient-text">hidden skills</span>{" "}
-              with AI
+              Discover your <span className="gradient-text">hidden skills</span> with AI
             </h1>
 
             <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
