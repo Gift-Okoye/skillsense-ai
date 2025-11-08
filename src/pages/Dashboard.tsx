@@ -5,6 +5,7 @@ import { SkillProgressBar } from "@/components/SkillProgressBar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, Download, Share2, User, Briefcase, Award } from "lucide-react";
+import logo from "@/assets/skillsense-logo.png";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -37,12 +38,11 @@ const Dashboard = () => {
       <div className="relative container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-heading font-semibold">SkillSense</span>
-          </div>
+          <img 
+            src={logo} 
+            alt="SkillSense Logo" 
+            className="h-10 w-auto"
+          />
           
           <div className="flex gap-3">
             <Button

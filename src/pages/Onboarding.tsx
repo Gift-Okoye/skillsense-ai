@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-illustration.jpg";
+import logo from "@/assets/skillsense-logo.png";
 
 const Onboarding = () => {
   const navigate = useNavigate();
@@ -14,11 +15,12 @@ const Onboarding = () => {
       
       <div className="relative container mx-auto px-4 py-16">
         {/* Logo */}
-        <div className="flex items-center gap-2 mb-16">
-          <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
-          <span className="text-2xl font-heading font-semibold">SkillSense</span>
+        <div className="flex items-center gap-3 mb-16">
+          <img 
+            src={logo} 
+            alt="SkillSense Logo" 
+            className="h-12 w-auto"
+          />
         </div>
 
         {/* Hero Section */}

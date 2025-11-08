@@ -1,8 +1,9 @@
 import { GlassCard } from "@/components/GlassCard";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { Sparkles, Brain, Target, Zap } from "lucide-react";
+import { Brain, Target, Zap } from "lucide-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "@/assets/skillsense-logo.png";
 
 const Analysis = () => {
   const navigate = useNavigate();
@@ -29,11 +30,12 @@ const Analysis = () => {
       <div className="relative container mx-auto px-4">
         <div className="max-w-2xl mx-auto space-y-12">
           {/* Logo */}
-          <div className="flex items-center gap-2 justify-center">
-            <div className="w-12 h-12 rounded-2xl gradient-primary flex items-center justify-center animate-pulse-glow">
-              <Sparkles className="w-7 h-7 text-white" />
-            </div>
-            <span className="text-3xl font-heading font-semibold">SkillSense</span>
+          <div className="flex justify-center">
+            <img 
+              src={logo} 
+              alt="SkillSense Logo" 
+              className="h-14 w-auto animate-pulse-glow"
+            />
           </div>
 
           {/* Main Card */}

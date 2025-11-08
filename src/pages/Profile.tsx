@@ -4,6 +4,7 @@ import { SkillTag } from "@/components/SkillTag";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Download, Share2, Sparkles, Mail, MapPin, Award } from "lucide-react";
+import logo from "@/assets/skillsense-logo.png";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -39,12 +40,11 @@ const Profile = () => {
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-heading font-semibold">SkillSense</span>
-            </div>
+            <img 
+              src={logo} 
+              alt="SkillSense Logo" 
+              className="h-10 w-auto"
+            />
           </div>
 
           <div className="flex gap-3">

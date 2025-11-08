@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { useNavigate } from "react-router-dom";
-import { Upload as UploadIcon, Linkedin, FileText, ArrowLeft, Sparkles } from "lucide-react";
+import { Upload as UploadIcon, Linkedin, FileText, ArrowLeft } from "lucide-react";
 import { useState } from "react";
+import logo from "@/assets/skillsense-logo.png";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -34,12 +35,11 @@ const Upload = () => {
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-heading font-semibold">SkillSense</span>
-            </div>
+            <img 
+              src={logo} 
+              alt="SkillSense Logo" 
+              className="h-10 w-auto"
+            />
           </div>
         </div>
 
