@@ -6,17 +6,10 @@ import { MessageCircle, Linkedin, Twitter, Facebook } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import logo from "@/assets/skillsense-logo.png";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 const Onboarding = () => {
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -26,8 +19,8 @@ const Onboarding = () => {
       
       {/* Check pattern overlay */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
-        backgroundImage: `repeating-conic-gradient(hsl(var(--foreground)) 0% 25%, transparent 0% 50%) 50% / 20px 20px`
-      }} />
+      backgroundImage: `repeating-conic-gradient(hsl(var(--foreground)) 0% 25%, transparent 0% 50%) 50% / 20px 20px`
+    }} />
       
       <div className="relative container mx-auto px-[80px] py-8 h-full flex flex-col">
         {/* Logo & Socials */}
@@ -60,8 +53,7 @@ const Onboarding = () => {
               <span className="text-sm font-medium text-primary">AI-Powered Skills Analysis</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-heading font-bold leading-tight">Discover your hidden skills 
-with AI<span className="gradient-text">hidden skills</span> with AI
+            <h1 className="text-5xl lg:text-6xl font-heading font-bold leading-tight">Discover your hidden skills with AI<span className="gradient-text">hidden skills</span> with AI
             </h1>
 
             <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
