@@ -5,6 +5,8 @@ import { SkillProgressBar } from "@/components/SkillProgressBar";
 import { ShareDropdown } from "@/components/ShareDropdown";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AIAssistantPanel } from "@/components/AIAssistantPanel";
+import { AIRecommendations } from "@/components/AIRecommendations";
+import { SkillsJobsLearnTabs } from "@/components/SkillsJobsLearnTabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, Download, Share2, User, Briefcase, Award, ArrowLeft, Camera, Bot, X } from "lucide-react";
@@ -115,8 +117,10 @@ const Dashboard = () => {
 
         {/* Main Grid */}
         <div className="grid lg:grid-cols-12 gap-8">
-          {/* Left Panel - Skills */}
+          {/* Left Panel - Skills & Features */}
           <div className="lg:col-span-8 space-y-8">
+            {/* AI Recommendations */}
+            <AIRecommendations />
             {/* Hard Skills */}
             <GlassCard className="animate-fade-in">
               <div className="flex items-center gap-3 mb-6">
@@ -179,6 +183,9 @@ const Dashboard = () => {
                 ))}
               </div>
             </GlassCard>
+
+            {/* Skills, Jobs, and Learning Tabs */}
+            <SkillsJobsLearnTabs />
           </div>
 
           {/* Right Panel - Profile */}
@@ -277,24 +284,21 @@ const Dashboard = () => {
       </div>
 
       {/* AI Assistant Panel */}
-      <div
-        className={cn(
-          "fixed right-0 top-0 h-screen w-[480px] z-50 transition-transform duration-300",
-          showAIPanel ? "translate-x-0" : "translate-x-full"
-        )}
-      >
-        <div className="relative h-full">
+      {showAIPanel && (
+        <>
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setShowAIPanel(false)}
-            className="absolute -left-12 top-4 z-50 rounded-2xl bg-background/95 backdrop-blur-xl border border-border hover:bg-background"
+            className="fixed right-[492px] top-4 z-50 rounded-2xl bg-background/95 backdrop-blur-xl border border-border hover:bg-background"
           >
             <X className="w-5 h-5" />
           </Button>
-          <AIAssistantPanel onClose={() => setShowAIPanel(false)} />
-        </div>
-      </div>
+          <div className="fixed right-0 top-0 h-screen w-[480px] z-40 transition-transform duration-300 translate-x-0">
+            <AIAssistantPanel onClose={() => setShowAIPanel(false)} />
+          </div>
+        </>
+      )}
     </div>
   );
 };
