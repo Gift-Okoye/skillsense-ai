@@ -3,7 +3,7 @@ import { GlassCard } from "@/components/GlassCard";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { MessageCircle, Linkedin, Twitter, Facebook } from "lucide-react";
-import heroImage from "@/assets/hero-illustration.jpg";
+import heroImage from "@/assets/hero-image.jpg";
 import logo from "@/assets/skillsense-logo.png";
 
 const Onboarding = () => {
