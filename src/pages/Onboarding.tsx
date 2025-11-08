@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { MessageCircle, Linkedin, Twitter, Github } from "lucide-react";
+import { MessageCircle, Linkedin, Twitter, Github, Mail } from "lucide-react";
 import heroImage from "@/assets/hero-image.jpg";
 import logo from "@/assets/skillsense-logo.png";
 import { useState } from "react";
@@ -10,9 +10,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 const Onboarding = () => {
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
   return <div className="h-screen overflow-hidden bg-gradient-to-b from-background via-secondary/30 to-background relative">
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
@@ -70,7 +72,7 @@ const Onboarding = () => {
                 Get Started
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button size="lg" variant="outline" className="rounded-2xl h-14 px-8 text-base font-medium border-2 hover:bg-secondary">
+              <Button size="lg" variant="outline" onClick={() => setShowHowItWorks(true)} className="rounded-2xl h-14 px-8 text-base font-medium border-2 hover:bg-secondary hover:text-foreground">
                 Learn More
               </Button>
             </div>
@@ -126,6 +128,24 @@ const Onboarding = () => {
             </TabsList>
             
             <TabsContent value="signin" className="space-y-4">
+              <div className="flex flex-col gap-3">
+                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
+                  <Mail className="w-5 h-5" />
+                  Continue with Google
+                </Button>
+                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
+                  <Linkedin className="w-5 h-5" />
+                  Continue with LinkedIn
+                </Button>
+              </div>
+              
+              <div className="relative">
+                <Separator />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">
+                  Or continue with email
+                </span>
+              </div>
+              
               <div className="space-y-2">
                 <Label htmlFor="signin-email">Email</Label>
                 <Input id="signin-email" type="email" placeholder="your@email.com" />
@@ -140,6 +160,24 @@ const Onboarding = () => {
             </TabsContent>
             
             <TabsContent value="signup" className="space-y-4">
+              <div className="flex flex-col gap-3">
+                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
+                  <Mail className="w-5 h-5" />
+                  Continue with Google
+                </Button>
+                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
+                  <Linkedin className="w-5 h-5" />
+                  Continue with LinkedIn
+                </Button>
+              </div>
+              
+              <div className="relative">
+                <Separator />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">
+                  Or continue with email
+                </span>
+              </div>
+              
               <div className="space-y-2">
                 <Label htmlFor="signup-name">Full Name</Label>
                 <Input id="signup-name" type="text" placeholder="John Doe" />
@@ -157,6 +195,61 @@ const Onboarding = () => {
               </Button>
             </TabsContent>
           </Tabs>
+        </DialogContent>
+      </Dialog>
+
+      {/* How It Works Modal */}
+      <Dialog open={showHowItWorks} onOpenChange={setShowHowItWorks}>
+        <DialogContent className="sm:max-w-[800px]">
+          <DialogHeader>
+            <DialogTitle>How SkillSense Works</DialogTitle>
+            <DialogDescription>
+              Watch this quick demo to see how our AI analyzes your profile
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="aspect-video w-full rounded-lg overflow-hidden bg-secondary">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="SkillSense Demo"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+          
+          <div className="space-y-4 pt-4">
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                1
+              </div>
+              <div>
+                <h3 className="font-semibold mb-1">Upload Your Profile</h3>
+                <p className="text-sm text-muted-foreground">Upload your CV or connect your LinkedIn profile</p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                2
+              </div>
+              <div>
+                <h3 className="font-semibold mb-1">AI Analysis</h3>
+                <p className="text-sm text-muted-foreground">Our AI analyzes your experience and extracts hidden skills</p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                3
+              </div>
+              <div>
+                <h3 className="font-semibold mb-1">Get Your Results</h3>
+                <p className="text-sm text-muted-foreground">View your skills in a beautiful, shareable format</p>
+              </div>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>;
