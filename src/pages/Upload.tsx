@@ -1,26 +1,124 @@
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { useNavigate } from "react-router-dom";
-import { Upload as UploadIcon, Linkedin, FileText, ArrowLeft } from "lucide-react";
+import { Upload as UploadIcon, Linkedin, FileText, ArrowLeft, CheckCircle2, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import logo from "@/assets/skillsense-logo.png";
+import gridPattern from "@/assets/grid-pattern.png";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
 
 const Upload = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorType, setErrorType] = useState<"format" | "oauth">("format");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
+      const file = e.target.files[0];
+      const validFormats = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
+      
+      if (!validFormats.includes(file.type)) {
+        setErrorType("format");
+        setErrorMessage("Invalid file format. Please upload a PDF, DOC, or DOCX file.");
+        setShowError(true);
+        return;
+      }
+      
+      setSelectedFile(file);
+      simulateUpload(file);
     }
   };
 
-  const handleAnalyze = () => {
-    navigate("/analysis");
+  const simulateUpload = async (file: File) => {
+    setIsUploading(true);
+    
+    // Simulate upload process (2 seconds)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsUploading(false);
+    setIsProcessing(true);
+    
+    // Simulate AI processing (3 seconds)
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    setIsProcessing(false);
+    toast({
+      title: "Analysis Complete!",
+      description: "Your profile has been successfully analyzed.",
+    });
+    
+    setTimeout(() => {
+      navigate("/analysis");
+    }, 1000);
+  };
+
+  const handleLinkedInConnect = async () => {
+    setIsUploading(true);
+    
+    // Simulate OAuth process (random success/failure)
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const success = Math.random() > 0.3; // 70% success rate for demo
+    
+    if (!success) {
+      setIsUploading(false);
+      setErrorType("oauth");
+      setErrorMessage("LinkedIn connection was denied or failed. Please try again.");
+      setShowError(true);
+      return;
+    }
+    
+    setIsUploading(false);
+    setIsProcessing(true);
+    
+    // Simulate AI processing (3 seconds)
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    setIsProcessing(false);
+    toast({
+      title: "Analysis Complete!",
+      description: "Your LinkedIn profile has been successfully analyzed.",
+    });
+    
+    setTimeout(() => {
+      navigate("/analysis");
+    }, 1000);
+  };
+
+  const handleRetry = () => {
+    setShowError(false);
+    setErrorMessage("");
+    setSelectedFile(null);
+  };
+
+  const handleCancel = () => {
+    setShowError(false);
+    setErrorMessage("");
+    setSelectedFile(null);
+    navigate("/");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
+      {/* Grid pattern overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${gridPattern})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.1
+        }}
+      />
+      
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
       <div className="relative container mx-auto px-4 py-8">
@@ -90,11 +188,11 @@ const Upload = () => {
                 </label>
 
                 <Button
-                  onClick={handleAnalyze}
-                  disabled={!selectedFile}
+                  onClick={() => selectedFile && simulateUpload(selectedFile)}
+                  disabled={!selectedFile || isUploading || isProcessing}
                   className="w-full gradient-primary text-primary-foreground rounded-2xl h-12 font-semibold hover-glow transition-smooth"
                 >
-                  Analyze CV
+                  {isUploading ? "Uploading..." : "Analyze CV"}
                 </Button>
               </div>
             </GlassCard>
@@ -126,30 +224,88 @@ const Upload = () => {
                 </div>
 
                 <Button
-                  onClick={handleAnalyze}
+                  onClick={handleLinkedInConnect}
+                  disabled={isUploading || isProcessing}
                   className="w-full bg-[#0077B5] hover:bg-[#006399] text-white rounded-2xl h-12 font-semibold transition-smooth"
                 >
-                  Connect with LinkedIn
+                  {isUploading ? "Connecting..." : "Connect with LinkedIn"}
                 </Button>
               </div>
             </GlassCard>
           </div>
-
-          {/* Features */}
-          <div className="grid grid-cols-3 gap-6 text-center animate-fade-in">
-            {[
-              { label: "Secure", sublabel: "256-bit encryption" },
-              { label: "Private", sublabel: "Never shared" },
-              { label: "Fast", sublabel: "Results in seconds" },
-            ].map((item, index) => (
-              <div key={index} className="space-y-1">
-                <div className="text-lg font-semibold text-foreground">{item.label}</div>
-                <div className="text-sm text-muted-foreground">{item.sublabel}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
+
+      {/* Processing Modal */}
+      <Dialog open={isProcessing} onOpenChange={() => {}}>
+        <DialogContent className="sm:max-w-[500px]">
+          <div className="absolute inset-0 pointer-events-none opacity-5" style={{
+            backgroundImage: `url(${gridPattern})`,
+            backgroundSize: "cover"
+          }} />
+          
+          <div className="relative text-center space-y-6 py-8">
+            <div className="flex justify-center">
+              <LoadingSpinner size="lg" />
+            </div>
+            
+            <DialogHeader>
+              <DialogTitle className="text-2xl">Analyzing Your Profile</DialogTitle>
+              <DialogDescription className="text-base">
+                Our AI is processing your information and extracting valuable insights...
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-3 text-left">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-4 w-4/6" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+            </div>
+
+            <div className="flex items-center gap-2 justify-center text-sm text-muted-foreground">
+              <CheckCircle2 className="w-4 h-4 text-primary" />
+              <span>This usually takes 30-60 seconds</span>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Error Modal */}
+      <Dialog open={showError} onOpenChange={setShowError}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
+                <AlertCircle className="w-8 h-8 text-destructive" />
+              </div>
+            </div>
+            <DialogTitle className="text-center text-xl">
+              {errorType === "format" ? "Invalid File Format" : "Connection Failed"}
+            </DialogTitle>
+            <DialogDescription className="text-center text-base">
+              {errorMessage}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex gap-3 mt-4">
+            <Button
+              variant="outline"
+              onClick={handleCancel}
+              className="flex-1 rounded-xl h-11"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleRetry}
+              className="flex-1 gradient-primary text-primary-foreground rounded-xl h-11"
+            >
+              Retry
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
