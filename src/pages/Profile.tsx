@@ -164,11 +164,11 @@ const Profile = () => {
             ) : (
               <Button 
                 variant="outline" 
-                className="rounded-2xl border-2 hover:bg-primary/5 hover:border-primary transition-all"
+                className="rounded-2xl border-2 hover:bg-primary/5 hover:border-primary hover:text-foreground transition-all group"
                 onClick={handleDownload}
               >
-                <Download className="w-4 h-4 mr-2" />
-                Download
+                <Download className="w-4 h-4 mr-2 group-hover:text-foreground" />
+                <span className="group-hover:text-foreground">Download</span>
               </Button>
             )}
             <PublishDialog />
@@ -205,7 +205,7 @@ const Profile = () => {
                 </div>
 
                 <div className="flex-1 space-y-4">
-                  <div>
+                  <div className="bg-background/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6">
                     <h1 className="text-4xl font-heading font-bold mb-2">John Doe</h1>
                     <p className="text-xl text-muted-foreground">Senior Software Engineer</p>
                   </div>

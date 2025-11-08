@@ -4,18 +4,21 @@ import { SkillTag } from "@/components/SkillTag";
 import { SkillProgressBar } from "@/components/SkillProgressBar";
 import { ShareDropdown } from "@/components/ShareDropdown";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AIAssistantPanel } from "@/components/AIAssistantPanel";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Download, Share2, User, Briefcase, Award, ArrowLeft, Camera } from "lucide-react";
+import { Sparkles, Download, Share2, User, Briefcase, Award, ArrowLeft, Camera, Bot, X } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
 import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [showAIPanel, setShowAIPanel] = useState(false);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -63,12 +66,13 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
+    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative flex">
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle,hsl(var(--accent)/0.1),transparent_70%)] pointer-events-none" />
       
-      <div className="relative container mx-auto px-4 py-8">
+      <div className={cn("relative flex-1 transition-all duration-300", showAIPanel && "mr-[480px]")}>
+        <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
@@ -89,6 +93,14 @@ const Dashboard = () => {
           
           <div className="flex gap-3">
             <ThemeToggle />
+            <Button
+              variant="outline"
+              className="rounded-2xl border-2"
+              onClick={() => setShowAIPanel(!showAIPanel)}
+            >
+              <Bot className="w-4 h-4 mr-2" />
+              AI Assistant
+            </Button>
             <Button
               variant="outline"
               className="rounded-2xl border-2"
@@ -172,7 +184,8 @@ const Dashboard = () => {
           {/* Right Panel - Profile */}
           <div className="lg:col-span-4 space-y-6">
             {/* Profile Card */}
-            <GlassCard className="animate-scale-in text-center space-y-6">
+            <GlassCard className="animate-scale-in text-center">
+              <div className="space-y-6">
               <div className="relative group cursor-pointer mx-auto w-24" onClick={() => fileInputRef.current?.click()}>
                 <Avatar className="w-24 h-24 border-4 border-primary/20">
                   {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
@@ -214,11 +227,13 @@ const Dashboard = () => {
               >
                 View Full Profile
               </Button>
+              </div>
             </GlassCard>
 
             {/* Quick Actions */}
-            <GlassCard className="animate-fade-in space-y-4" style={{ animationDelay: "200ms" }}>
-              <h3 className="font-heading font-semibold text-lg">Quick Actions</h3>
+            <GlassCard className="animate-fade-in" style={{ animationDelay: "200ms" }}>
+              <div className="space-y-4">
+                <h3 className="font-heading font-semibold text-lg">Quick Actions</h3>
               <div className="space-y-3">
                 <Button
                   variant="outline"
@@ -234,6 +249,7 @@ const Dashboard = () => {
                   <Share2 className="w-4 h-4 mr-3" />
                   Share Results
                 </Button>
+              </div>
               </div>
             </GlassCard>
 
@@ -256,6 +272,27 @@ const Dashboard = () => {
               </div>
             </GlassCard>
           </div>
+        </div>
+        </div>
+      </div>
+
+      {/* AI Assistant Panel */}
+      <div
+        className={cn(
+          "fixed right-0 top-0 h-screen w-[480px] z-50 transition-transform duration-300",
+          showAIPanel ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <div className="relative h-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setShowAIPanel(false)}
+            className="absolute -left-12 top-4 z-50 rounded-2xl bg-background/95 backdrop-blur-xl border border-border hover:bg-background"
+          >
+            <X className="w-5 h-5" />
+          </Button>
+          <AIAssistantPanel onClose={() => setShowAIPanel(false)} />
         </div>
       </div>
     </div>

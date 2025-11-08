@@ -15,8 +15,8 @@ export const GlassCard = ({ children, className, hover = false, style }: GlassCa
         "relative rounded-3xl p-8 transition-all duration-300",
         "bg-background/40 backdrop-blur-xl",
         "border border-white/10",
-        "shadow-[0_8px_32px_0_rgba(0,0,0,0.12)]",
-        hover && "hover:bg-background/60 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.16)] hover:-translate-y-1 cursor-pointer",
+        "shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]",
+        hover && "hover:bg-background/60 hover:shadow-[0_4px_12px_0_rgba(0,0,0,0.06)] hover:-translate-y-1 cursor-pointer",
         className
       )}
       style={style}
