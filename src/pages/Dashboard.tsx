@@ -2,13 +2,44 @@ import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/GlassCard";
 import { SkillTag } from "@/components/SkillTag";
 import { SkillProgressBar } from "@/components/SkillProgressBar";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ShareDropdown } from "@/components/ShareDropdown";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Download, Share2, User, Briefcase, Award, ArrowLeft } from "lucide-react";
+import { Sparkles, Download, Share2, User, Briefcase, Award, ArrowLeft, Camera } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
+import gridPattern from "@/assets/grid-pattern.png";
+import { useState, useRef } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Please select an image under 5MB",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+        toast({
+          title: "Profile image updated",
+          description: "Your profile image has been changed successfully",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const mockSkills = {
     hard: [
@@ -32,7 +63,19 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
+      {/* Grid pattern overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${gridPattern})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.1
+        }}
+      />
+      
+      {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
       <div className="relative container mx-auto px-4 py-8">
@@ -63,12 +106,7 @@ const Dashboard = () => {
               <User className="w-4 h-4 mr-2" />
               View Profile
             </Button>
-            <Button
-              className="gradient-primary text-primary-foreground rounded-2xl hover-glow"
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              Share
-            </Button>
+            <ShareDropdown />
           </div>
         </div>
 
@@ -144,11 +182,24 @@ const Dashboard = () => {
           <div className="lg:col-span-4 space-y-6">
             {/* Profile Card */}
             <GlassCard className="animate-scale-in text-center space-y-6">
-              <Avatar className="w-24 h-24 mx-auto border-4 border-primary/20">
-                <AvatarFallback className="text-2xl font-semibold gradient-primary text-white">
-                  JD
-                </AvatarFallback>
-              </Avatar>
+              <div className="relative group cursor-pointer mx-auto w-24" onClick={() => fileInputRef.current?.click()}>
+                <Avatar className="w-24 h-24 border-4 border-primary/20">
+                  {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
+                  <AvatarFallback className="text-2xl font-semibold gradient-primary text-white">
+                    JD
+                  </AvatarFallback>
+                </Avatar>
+                <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Camera className="w-6 h-6 text-white" />
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </div>
 
               <div>
                 <h3 className="text-2xl font-heading font-bold mb-2">John Doe</h3>
