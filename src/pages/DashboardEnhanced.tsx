@@ -185,11 +185,13 @@ const DashboardEnhanced = () => {
             >
               <ArrowLeft className="w-5 h-5 text-foreground" />
             </Button>
-            <img 
-              src={logo} 
-              alt="SkillSense Logo" 
-              className="h-8 md:h-10 w-auto"
-            />
+            <a href="/" className="flex items-center">
+              <img 
+                src={logo} 
+                alt="SkillSense Logo" 
+                className="h-8 md:h-10 w-auto hover:opacity-80 transition-opacity"
+              />
+            </a>
             <div className="ml-2 md:ml-4 hidden sm:block">
               <h1 className="text-xl md:text-2xl font-heading font-bold">Enhanced Dashboard</h1>
               <p className="text-xs md:text-sm text-muted-foreground">Modern UX Features Demo</p>

@@ -54,11 +54,13 @@ const Analysis = () => {
             >
               <ArrowLeft className="w-5 h-5 text-foreground" />
             </Button>
-            <img 
-              src={logo} 
-              alt="SkillSense Logo" 
-              className="h-8 md:h-10 w-auto"
-            />
+            <a href="/" className="flex items-center">
+              <img 
+                src={logo} 
+                alt="SkillSense Logo" 
+                className="h-8 md:h-10 w-auto hover:opacity-80 transition-opacity"
+              />
+            </a>
           </div>
           <div className="hidden md:block">
             <ThemeToggle />

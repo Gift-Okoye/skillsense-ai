@@ -367,7 +367,9 @@ const Dashboard = () => {
             <Button variant="ghost" size="icon" onClick={() => navigate("/analysis")} className="rounded-2xl hover:bg-secondary hover:text-foreground">
               <ArrowLeft className="w-5 h-5 text-foreground" />
             </Button>
-            <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto" />
+            <a href="/" className="flex items-center">
+              <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto hover:opacity-80 transition-opacity" />
+            </a>
           </div>
 
           {/* Desktop Navigation */}
@@ -563,11 +565,11 @@ const Dashboard = () => {
                     <div className="space-y-4">
                       <h3 className="font-heading font-semibold text-lg">Quick Actions</h3>
                     <div className="space-y-3">
-                      <Button variant="outline" className="w-full justify-start rounded-2xl h-12 border-2">
+                      <Button variant="outline" className="w-full justify-start rounded-2xl h-12 border-2 transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]">
                         <Download className="w-4 h-4 mr-3" />
                         Download Report
                       </Button>
-                      <Button variant="outline" className="w-full justify-start rounded-2xl h-12 border-2">
+                      <Button variant="outline" className="w-full justify-start rounded-2xl h-12 border-2 transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]">
                         <Share2 className="w-4 h-4 mr-3" />
                         Share Results
                       </Button>

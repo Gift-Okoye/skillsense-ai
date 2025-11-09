@@ -17,6 +17,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ApplicationModal } from "@/components/ApplicationModal";
 
 interface Job {
   id: string;
@@ -42,6 +43,12 @@ interface Course {
 export const SkillsJobsLearnTabs = () => {
   const { toast } = useToast();
   const [newSkill, setNewSkill] = useState("");
+  const [applicationModal, setApplicationModal] = useState<{
+    open: boolean;
+    type: "job" | "course";
+    title: string;
+    company: string;
+  }>({ open: false, type: "job", title: "", company: "" });
   
   // Mock job data
   const [jobs, setJobs] = useState<Job[]>([
@@ -118,13 +125,21 @@ export const SkillsJobsLearnTabs = () => {
     setNewSkill("");
   };
 
-  const handleApplyJob = (jobId: string) => {
-    setJobs(prev => prev.map(job => 
-      job.id === jobId ? { ...job, applied: true } : job
-    ));
-    toast({
-      title: "Application Submitted",
-      description: "Your application has been sent successfully!",
+  const handleApplyJob = (job: Job) => {
+    setApplicationModal({
+      open: true,
+      type: "job",
+      title: job.title,
+      company: job.company,
+    });
+  };
+
+  const handleEnrollCourse = (course: Course) => {
+    setApplicationModal({
+      open: true,
+      type: "course",
+      title: course.title,
+      company: course.provider,
     });
   };
 
@@ -201,8 +216,8 @@ export const SkillsJobsLearnTabs = () => {
 
         {/* Jobs Tab */}
         <TabsContent value="jobs" className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <h3 className="font-semibold flex items-center gap-2 text-center w-full sm:w-auto">
               <Briefcase className="w-4 h-4" />
               Matching Opportunities
             </h3>
@@ -262,8 +277,8 @@ export const SkillsJobsLearnTabs = () => {
                     ) : (
                       <Button
                         size="sm"
-                        onClick={() => handleApplyJob(job.id)}
-                        className="rounded-2xl flex-1 gradient-primary text-white"
+                        onClick={() => handleApplyJob(job)}
+                        className="rounded-2xl flex-1 gradient-primary text-white transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
                       >
                         Quick Apply
                       </Button>
@@ -284,7 +299,7 @@ export const SkillsJobsLearnTabs = () => {
 
         {/* Courses Tab */}
         <TabsContent value="courses" className="space-y-4">
-          <h3 className="font-semibold flex items-center gap-2">
+          <h3 className="font-semibold flex items-center gap-2 text-center justify-center w-full">
             <GraduationCap className="w-4 h-4" />
             Recommended Courses
           </h3>
@@ -320,7 +335,8 @@ export const SkillsJobsLearnTabs = () => {
 
                   <Button
                     size="sm"
-                    className="rounded-2xl w-full gradient-primary text-white"
+                    onClick={() => handleEnrollCourse(course)}
+                    className="rounded-2xl w-full gradient-primary text-white transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
                   >
                     <GraduationCap className="w-3 h-3 mr-2" />
                     Enroll Now
@@ -331,6 +347,14 @@ export const SkillsJobsLearnTabs = () => {
           </ScrollArea>
         </TabsContent>
       </Tabs>
+
+      <ApplicationModal
+        open={applicationModal.open}
+        onOpenChange={(open) => setApplicationModal({ ...applicationModal, open })}
+        type={applicationModal.type}
+        title={applicationModal.title}
+        company={applicationModal.company}
+      />
     </GlassCard>
   );
 };

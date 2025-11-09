@@ -36,7 +36,9 @@ const Onboarding = () => {
       <div className="relative container mx-auto px-6 md:px-8 lg:px-[80px] py-6 md:py-8 h-full flex flex-col">
         {/* Logo & Socials */}
         <div className="flex items-center justify-between mb-8 md:mb-8">
-          <img src={logo} alt="SkillSense Logo" className="h-10 md:h-12 w-auto" />
+          <a href="/" className="flex items-center">
+            <img src={logo} alt="SkillSense Logo" className="h-10 md:h-12 w-auto hover:opacity-80 transition-opacity" />
+          </a>
           
           {/* Social Links - Desktop */}
           <div className="hidden md:flex items-center gap-3">
@@ -70,7 +72,7 @@ const Onboarding = () => {
               <span className="text-sm font-medium text-primary">AI-Powered Skills Analysis</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-normal leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-normal leading-tight">
               Discover your<br />
               <span className="text-primary">Hidden <span className="font-playfair italic">Skills</span></span><br />
               With AI
@@ -120,7 +122,7 @@ const Onboarding = () => {
 
       {/* Auth Modal */}
       <Dialog open={showAuthModal} onOpenChange={setShowAuthModal}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] mx-6 rounded-3xl">
           <DialogHeader>
             <DialogTitle>Welcome to SkillSense</DialogTitle>
             <DialogDescription>
@@ -207,7 +209,7 @@ const Onboarding = () => {
 
       {/* How It Works Modal */}
       <Dialog open={showHowItWorks} onOpenChange={setShowHowItWorks}>
-        <DialogContent className="sm:max-w-[800px]">
+        <DialogContent className="sm:max-w-[800px] mx-6 rounded-3xl">
           <DialogHeader>
             <DialogTitle>How SkillSense Works</DialogTitle>
             <DialogDescription>

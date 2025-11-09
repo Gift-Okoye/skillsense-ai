@@ -185,7 +185,9 @@ const Profile = () => {
             <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")} className="rounded-2xl hover:bg-secondary hover:text-foreground">
               <ArrowLeft className="w-5 h-5" />
             </Button>
-            <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto" />
+            <a href="/" className="flex items-center">
+              <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto hover:opacity-80 transition-opacity" />
+            </a>
           </div>
 
           {/* Desktop actions */}
