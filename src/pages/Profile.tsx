@@ -213,8 +213,6 @@ const Profile = () => {
         <div className="max-w-5xl mx-auto space-y-8">
           {/* Hero Section */}
           <GlassCard className="relative overflow-hidden animate-fade-in">
-            {/* Background gradient */}
-            <div className="absolute top-0 left-0 right-0 h-32 gradient-primary opacity-10" />
             
             <div className="relative pt-8 rounded-sm">
               <div className="flex md:flex-row gap-8 items-start md:items-center">
