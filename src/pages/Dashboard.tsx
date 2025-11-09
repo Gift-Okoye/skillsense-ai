@@ -356,9 +356,9 @@ const Dashboard = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[radial-gradient(circle,hsl(var(--accent)/0.1),transparent_70%)] pointer-events-none" />
       
-      <div className="container mx-auto px-4 py-8 relative">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-8 relative">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-4 md:mb-8 flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" onClick={() => navigate("/analysis")} className="rounded-2xl hover:bg-secondary hover:text-foreground">
               <ArrowLeft className="w-5 h-5 text-foreground" />
@@ -367,7 +367,7 @@ const Dashboard = () => {
           </div>
 
           {/* Center Navigation */}
-          <nav className="flex gap-2 bg-muted/50 backdrop-blur-sm rounded-2xl p-1.5">
+          <nav className="flex gap-1 md:gap-2 bg-muted/50 backdrop-blur-sm rounded-2xl p-1.5 order-3 lg:order-2 w-full lg:w-auto justify-center">
             <Button variant={activeSection === "skills" ? "default" : "ghost"} size="sm" onClick={() => setActiveSection("skills")} className="rounded-xl">
               <Award className="w-4 h-4 mr-2" />
               Skills
@@ -382,11 +382,11 @@ const Dashboard = () => {
             </Button>
           </nav>
           
-          <div className="flex gap-3">
+          <div className="flex gap-2 md:gap-3 order-2 lg:order-3">
             <ThemeToggle />
-            <Button variant="outline" className="rounded-2xl border-2" onClick={() => navigate("/profile")}>
+            <Button variant="outline" className="rounded-2xl border-2 hidden md:flex" onClick={() => navigate("/profile")}>
               <User className="w-4 h-4 mr-2" />
-              View Profile
+              <span className="hidden lg:inline">View Profile</span>
             </Button>
             <ShareDropdown />
           </div>
@@ -397,9 +397,9 @@ const Dashboard = () => {
             {/* Skills Section */}
             <div className="w-full space-y-8">
               {/* Add Skill & AI Recommendations Container */}
-              <div className="flex flex-row gap-x-8">
+              <div className="flex flex-col lg:flex-row gap-4 lg:gap-x-8">
                 {/* Add New Skill & AI Recommendations (add_rec_container) */}
-                <div className="w-[130%] flex flex-col gap-4 flex-grow">
+                <div className="w-full lg:w-[130%] flex flex-col gap-4 flex-grow">
                   {/* Add New Skill */}
                   <GlassCard className="animate-fade-in">
                     <h3 className="font-semibold mb-3 flex items-center gap-2">
@@ -458,7 +458,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Profile Card */}
-                <GlassCard className="animate-scale-in text-center w-[30%] flex-shrink-0">
+                <GlassCard className="animate-scale-in text-center w-full lg:w-[30%] flex-shrink-0">
                   <div className="space-y-6">
                   <div className="relative group cursor-pointer mx-auto w-24" onClick={() => fileInputRef.current?.click()}>
                     <Avatar className="w-24 h-24 border-4 border-primary/20">
@@ -497,7 +497,7 @@ const Dashboard = () => {
               </div>
 
               {/* Hard Skills & Quick Actions/Stats Container */}
-              <div className="flex flex-row gap-x-6">
+              <div className="flex flex-col lg:flex-row gap-4 lg:gap-x-6">
                 {/* Hard Skills */}
                 <GlassCard className="animate-fade-in w-full">
                   <div className="flex items-center gap-3 mb-6">
@@ -512,7 +512,7 @@ const Dashboard = () => {
                 </GlassCard>
 
                 {/* Quick Actions & Analysis Summary (quick_ana_container) */}
-                <div className="space-y-6 w-[30%]">
+                <div className="space-y-4 md:space-y-6 w-full lg:w-[30%]">
                   {/* Quick Actions */}
                   <GlassCard className="animate-fade-in" style={{
                 animationDelay: "200ms"
@@ -556,7 +556,7 @@ const Dashboard = () => {
               </div>
 
               {/* Soft & Inferred Skills - Side by Side */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 {/* Soft Skills */}
                 <GlassCard className="animate-fade-in" style={{
               animationDelay: "150ms"
@@ -591,14 +591,14 @@ const Dashboard = () => {
           </div>}
 
         {/* Jobs Section */}
-        {activeSection === "jobs" && <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-heading font-bold">Matching Job Opportunities</h2>
-              <Button className="rounded-2xl gradient-primary text-white">
+        {activeSection === "jobs" && <div className="flex flex-col h-[calc(100vh-12rem)]">
+            <div className="flex items-center justify-between mb-6 flex-shrink-0">
+              <h2 className="text-2xl md:text-3xl font-heading font-bold">Matching Job Opportunities</h2>
+              <Button className="rounded-2xl gradient-primary text-white hidden md:flex">
                 Auto-Apply to All
               </Button>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 overflow-y-auto flex-1 pr-2">
               {jobs.map(job => <GlassCard key={job.id} className="animate-fade-in flex flex-col">
                   <div className="space-y-4 flex-1">
                     <div className="flex items-start justify-between">
@@ -643,9 +643,9 @@ const Dashboard = () => {
           </div>}
 
         {/* Courses Section */}
-        {activeSection === "courses" && <div className="space-y-6">
-            <h2 className="text-3xl font-heading font-bold">Recommended Courses</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {activeSection === "courses" && <div className="flex flex-col h-[calc(100vh-12rem)]">
+            <h2 className="text-2xl md:text-3xl font-heading font-bold mb-6 flex-shrink-0">Recommended Courses</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 overflow-y-auto flex-1 pr-2">
               {courses.map(course => <GlassCard key={course.id} className="animate-fade-in flex flex-col">
                   <div className="space-y-4 flex-1">
                     <div>
