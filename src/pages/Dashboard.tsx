@@ -252,7 +252,7 @@ const Dashboard = () => {
               <AIRecommendations />
 
               {/* Hard Skills */}
-              <GlassCard className="animate-fade-in h-full">
+              <GlassCard className="animate-fade-in">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
                     <Award className="w-5 h-5 text-white" />
