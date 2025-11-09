@@ -239,8 +239,8 @@ const Profile = () => {
           <GlassCard className="relative overflow-hidden animate-fade-in">
             
             <div className="relative pt-8 rounded-sm">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
-                <div className="flex-1 space-y-4 text-center md:text-left order-2 md:order-1">
+              <div className="flex flex-col-reverse md:flex-row gap-6 md:gap-8 items-center md:items-start">
+                <div className="flex-1 space-y-4 text-center md:text-left">
                   <div>
                     <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2">John Doe</h1>
                     <p className="text-lg md:text-xl text-muted-foreground">Senior Software Engineer</p>
@@ -263,7 +263,7 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <div className="relative group cursor-pointer order-1 md:order-2" onClick={() => fileInputRef.current?.click()}>
+                <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
                   <Avatar className="w-24 h-24 md:w-32 md:h-32 border-4 border-background shadow-lg">
                     {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
                     <AvatarFallback className="text-2xl md:text-4xl font-bold gradient-primary text-white">
