@@ -245,9 +245,9 @@ const Dashboard = () => {
 
         {/* Main Content */}
         {activeSection === "skills" && (
-          <div className="grid lg:grid-cols-12 gap-8">
-            {/* Left Panel - Skills */}
-            <div className="lg:col-span-8 space-y-8">
+          <div className="w-full">
+            {/* Skills Section */}
+            <div className="w-full space-y-8">
               {/* Add Skill & AI Recommendations Container */}
               <div className="grid lg:grid-cols-2 gap-6">
                 {/* Add New Skill & AI Recommendations (add_rec_container) */}
