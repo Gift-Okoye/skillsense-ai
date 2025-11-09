@@ -249,9 +249,9 @@ const Dashboard = () => {
             {/* Left Panel - Skills */}
             <div className="lg:col-span-8 space-y-8">
               {/* Add Skill & AI Recommendations Container */}
-              <div className="grid lg:grid-cols-2 gap-6">
+              <div className="flex gap-6 w-full">
                 {/* Add New Skill & AI Recommendations (add_rec_container) */}
-                <div className="space-y-6">
+                <div className="flex-1 space-y-6">
                   {/* Add New Skill */}
                   <GlassCard className="animate-fade-in">
                     <h3 className="font-semibold mb-3 flex items-center gap-2">
@@ -313,7 +313,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Profile Card */}
-                <GlassCard className="animate-scale-in text-center">
+                <GlassCard className="animate-scale-in text-center w-[30%] flex-shrink-0">
                   <div className="space-y-6">
                   <div className="relative group cursor-pointer mx-auto w-24" onClick={() => fileInputRef.current?.click()}>
                     <Avatar className="w-24 h-24 border-4 border-primary/20">
