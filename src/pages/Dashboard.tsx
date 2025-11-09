@@ -637,8 +637,8 @@ const Dashboard = () => {
 
         {/* Jobs Section */}
         {activeSection === "jobs" && <div className="flex flex-col h-[calc(100vh-12rem)]">
-            <div className="flex items-center justify-between mb-6 flex-shrink-0">
-              <h2 className="text-2xl md:text-3xl font-heading font-bold">Matching Job Opportunities</h2>
+            <div className="flex flex-col items-center mb-6 flex-shrink-0 gap-3">
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-center">Matching Job Opportunities</h2>
               <Button className="rounded-2xl gradient-primary text-white hidden md:flex">
                 Auto-Apply to All
               </Button>
@@ -689,7 +689,7 @@ const Dashboard = () => {
 
         {/* Courses Section */}
         {activeSection === "courses" && <div className="flex flex-col h-[calc(100vh-12rem)]">
-            <h2 className="text-2xl md:text-3xl font-heading font-bold mb-6 flex-shrink-0">Recommended Courses</h2>
+            <h2 className="text-2xl md:text-3xl font-heading font-bold mb-6 flex-shrink-0 text-center">Recommended Courses</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 overflow-y-auto flex-1 pr-2">
               {courses.map(course => <GlassCard key={course.id} className="animate-fade-in flex flex-col">
                   <div className="space-y-4 flex-1">
