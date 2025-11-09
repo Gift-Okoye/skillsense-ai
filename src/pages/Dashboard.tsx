@@ -330,7 +330,7 @@ const Dashboard = () => {
               </div>
 
               {/* Hard Skills & Quick Actions/Stats Container */}
-              <div className="grid lg:grid-cols-2 gap-6">
+              <div className="flex flex-row gap-x-6">
                 {/* Hard Skills */}
                 <GlassCard className="animate-fade-in">
                   <div className="flex items-center gap-3 mb-6">
