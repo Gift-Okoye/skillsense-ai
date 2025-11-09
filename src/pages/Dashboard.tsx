@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { MobileMenu } from "@/components/MobileMenu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { ApplicationModal } from "@/components/ApplicationModal";
 const Dashboard = () => {
   const navigate = useNavigate();
   const {
@@ -28,6 +29,12 @@ const Dashboard = () => {
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [showAIPanel, setShowAIPanel] = useState(false);
   const isMobile = useIsMobile();
+  const [applicationModal, setApplicationModal] = useState<{
+    open: boolean;
+    type: "job" | "course";
+    title: string;
+    company: string;
+  }>({ open: false, type: "job", title: "", company: "" });
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -353,6 +360,15 @@ const Dashboard = () => {
     toast({
       title: "Application Submitted",
       description: "Your application has been sent successfully!"
+    });
+  };
+
+  const handleEnrollCourse = (course: typeof courses[0]) => {
+    setApplicationModal({
+      open: true,
+      type: "course",
+      title: course.title,
+      company: course.provider,
     });
   };
   return <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
@@ -714,7 +730,7 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  <Button size="sm" className="rounded-2xl w-full gradient-primary text-white mt-4">
+                  <Button size="sm" onClick={() => handleEnrollCourse(course)} className="rounded-2xl w-full gradient-primary text-white mt-4 transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]">
                     <GraduationCap className="w-3 h-3 mr-2" />
                     Enroll Now
                   </Button>
@@ -748,6 +764,14 @@ const Dashboard = () => {
           </SheetContent>
         </Sheet>
       )}
+
+      <ApplicationModal
+        open={applicationModal.open}
+        onOpenChange={(open) => setApplicationModal({ ...applicationModal, open })}
+        type={applicationModal.type}
+        title={applicationModal.title}
+        company={applicationModal.company}
+      />
     </div>;
 };
 export default Dashboard;
