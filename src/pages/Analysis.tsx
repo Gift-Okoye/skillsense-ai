@@ -80,10 +80,10 @@ const Analysis = () => {
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-2xl md:text-3xl font-heading font-bold">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-heading font-bold">
                 Analyzing Your Profile
               </h2>
-              <p className="text-base md:text-lg text-muted-foreground">
+              <p className="text-sm md:text-base lg:text-lg text-muted-foreground">
                 Our AI is discovering your hidden skills...
               </p>
             </div>

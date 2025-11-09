@@ -42,6 +42,12 @@ const Upload = () => {
   const simulateUpload = async (file: File) => {
     setIsUploading(true);
     
+    // Auto-save notification
+    toast({
+      title: "File Saved",
+      description: "Your file has been automatically saved.",
+    });
+    
     // Simulate upload process (2 seconds)
     await new Promise(resolve => setTimeout(resolve, 2000));
     

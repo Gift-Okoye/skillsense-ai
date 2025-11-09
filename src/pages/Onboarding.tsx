@@ -64,7 +64,7 @@ const Onboarding = () => {
         {/* Hero Section */}
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center max-w-7xl mx-auto flex-1">
           {/* Left Content */}
-          <div className="space-y-6 md:space-y-8 animate-fade-in">
+          <div className="space-y-6 md:space-y-8 animate-fade-in px-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">AI-Powered Skills Analysis</span>
@@ -92,8 +92,8 @@ const Onboarding = () => {
               </Button>
             </div>
 
-            {/* Stats */}
-            <div className="flex flex-wrap gap-6 md:gap-8 pt-6 md:pt-8">
+            {/* Stats - Hidden on mobile */}
+            <div className="hidden md:flex flex-wrap gap-6 md:gap-8 pt-6 md:pt-8">
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-foreground">10k+</div>
                 <div className="text-sm text-muted-foreground">Profiles Analyzed</div>
@@ -128,7 +128,7 @@ const Onboarding = () => {
 
       {/* Auth Modal */}
       <Dialog open={showAuthModal} onOpenChange={setShowAuthModal}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Welcome to SkillSense</DialogTitle>
             <DialogDescription>
@@ -215,7 +215,7 @@ const Onboarding = () => {
 
       {/* How It Works Modal */}
       <Dialog open={showHowItWorks} onOpenChange={setShowHowItWorks}>
-        <DialogContent className="sm:max-w-[800px]">
+        <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>How SkillSense Works</DialogTitle>
             <DialogDescription>

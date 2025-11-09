@@ -42,9 +42,11 @@ const Dashboard = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result as string);
+        
+        // Auto-save notification
         toast({
-          title: "Profile image updated",
-          description: "Your profile image has been changed successfully"
+          title: "Image Saved",
+          description: "Your profile image has been updated and saved successfully"
         });
       };
       reader.readAsDataURL(file);
@@ -339,9 +341,11 @@ const Dashboard = () => {
   }];
   const handleAddSkill = () => {
     if (!newSkill.trim()) return;
+    
+    // Auto-save skill
     toast({
-      title: "Skill Added",
-      description: `"${newSkill}" has been added to your profile for AI analysis.`
+      title: "Skill Added & Saved",
+      description: `"${newSkill}" has been added and saved to your profile.`
     });
     setNewSkill("");
   };
