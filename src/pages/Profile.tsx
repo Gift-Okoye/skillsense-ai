@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Download, Sparkles, Mail, MapPin, Award, Camera, CheckCircle2 } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
 import gridPattern from "@/assets/grid-pattern.png";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { MobileMenu } from "@/components/MobileMenu";
 const Profile = () => {
@@ -21,6 +21,14 @@ const Profile = () => {
   } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+
+  // Load saved profile image on mount
+  useEffect(() => {
+    const savedImage = localStorage.getItem('skillsense_profile_image');
+    if (savedImage) {
+      setProfileImage(savedImage);
+    }
+  }, []);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [isDownloading, setIsDownloading] = useState(false);
   const allSkills = [{
@@ -133,9 +141,11 @@ const Profile = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result as string);
+        // Auto-save to localStorage
+        localStorage.setItem('skillsense_profile_image', reader.result as string);
         toast({
           title: "Profile image updated",
-          description: "Your profile image has been changed successfully"
+          description: "Your profile image has been auto-saved"
         });
       };
       reader.readAsDataURL(file);
@@ -279,7 +289,7 @@ const Profile = () => {
               </div>
               <h2 className="text-2xl font-heading font-semibold">AI-Generated Summary</h2>
             </div>
-            <p className="text-muted-foreground leading-relaxed text-lg">
+            <p className="text-muted-foreground leading-relaxed text-sm md:text-lg">
               An accomplished software engineer with over 5 years of experience in full-stack development. 
               Demonstrates strong technical proficiency in modern web technologies including React, TypeScript, 
               and Node.js. Known for exceptional problem-solving abilities and leadership skills. Has proven 

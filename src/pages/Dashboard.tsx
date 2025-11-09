@@ -29,6 +29,14 @@ const Dashboard = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [showAIPanel, setShowAIPanel] = useState(false);
+  
+  // Load saved profile image on mount
+  useEffect(() => {
+    const savedImage = localStorage.getItem('skillsense_profile_image');
+    if (savedImage) {
+      setProfileImage(savedImage);
+    }
+  }, []);
   const isMobile = useIsMobile();
   const [applicationModal, setApplicationModal] = useState<{
     open: boolean;
@@ -50,9 +58,11 @@ const Dashboard = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result as string);
+        // Auto-save to localStorage
+        localStorage.setItem('skillsense_profile_image', reader.result as string);
         toast({
           title: "Profile image updated",
-          description: "Your profile image has been changed successfully"
+          description: "Your profile image has been auto-saved"
         });
       };
       reader.readAsDataURL(file);
@@ -387,9 +397,14 @@ const Dashboard = () => {
   const [visibleCourses, setVisibleCourses] = useState(8);
   const handleAddSkill = () => {
     if (!newSkill.trim()) return;
+    // Auto-save to localStorage
+    const savedSkills = JSON.parse(localStorage.getItem('skillsense_custom_skills') || '[]');
+    savedSkills.push(newSkill);
+    localStorage.setItem('skillsense_custom_skills', JSON.stringify(savedSkills));
+    
     toast({
       title: "Skill Added",
-      description: `"${newSkill}" has been added to your profile for AI analysis.`
+      description: `"${newSkill}" has been auto-saved to your profile.`
     });
     setNewSkill("");
   };
@@ -936,7 +951,7 @@ const Dashboard = () => {
                         <Button 
                           size="sm" 
                           variant="outline"
-                          className="rounded-2xl w-full mt-auto transition-smooth hover:scale-[1.02]"
+                          className="rounded-2xl w-full mt-2 transition-smooth hover:scale-[1.02]"
                         >
                           {course.completed ? "Review Course" : "Continue Learning"}
                         </Button>
@@ -983,7 +998,7 @@ const Dashboard = () => {
                         <Button 
                           size="sm" 
                           onClick={() => handleEnrollCourse(course)} 
-                          className="rounded-2xl w-full gradient-primary text-white mt-auto transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+                          className="rounded-2xl w-full gradient-primary text-white mt-2 transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
                         >
                           <GraduationCap className="w-3 h-3 mr-2" />
                           Enroll Now
