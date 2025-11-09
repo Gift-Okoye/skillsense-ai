@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { MobileMenu } from "@/components/MobileMenu";
 const Onboarding = () => {
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -32,13 +33,13 @@ const Onboarding = () => {
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
-      <div className="relative container mx-auto px-[80px] py-8 h-full flex flex-col">
+      <div className="relative container mx-auto px-4 md:px-8 lg:px-[80px] py-6 md:py-8 h-full flex flex-col">
         {/* Logo & Socials */}
-        <div className="flex items-center justify-between mb-8">
-          <img src={logo} alt="SkillSense Logo" className="h-12 w-auto" />
+        <div className="flex items-center justify-between mb-6 md:mb-8">
+          <img src={logo} alt="SkillSense Logo" className="h-10 md:h-12 w-auto" />
           
-          {/* Social Links */}
-          <div className="flex items-center gap-3">
+          {/* Social Links - Desktop */}
+          <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
             <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group">
               <MessageCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
@@ -53,58 +54,63 @@ const Onboarding = () => {
               <Github className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
             </a>
           </div>
+
+          {/* Mobile Menu */}
+          <div className="md:hidden">
+            <MobileMenu />
+          </div>
         </div>
 
         {/* Hero Section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto flex-1">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center max-w-7xl mx-auto flex-1">
           {/* Left Content */}
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-6 md:space-y-8 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">AI-Powered Skills Analysis</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-heading font-normal leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-normal leading-tight">
               Discover your<br />
               <span className="text-primary">Hidden <span className="font-playfair italic">Skills</span></span><br />
               With AI
             </h1>
 
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
               SkillSense uses advanced AI to analyze your CV or LinkedIn profile, 
               uncovering valuable skills you didn't know you had and presenting 
               them in a beautiful, professional format.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" onClick={() => setShowAuthModal(true)} className="group gradient-primary text-primary-foreground rounded-2xl h-14 px-8 text-base font-semibold hover-glow transition-smooth">
+              <Button size="lg" onClick={() => setShowAuthModal(true)} className="group gradient-primary text-primary-foreground rounded-2xl h-12 md:h-14 px-6 md:px-8 text-base font-semibold hover-glow transition-smooth">
                 Get Started
                 <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button size="lg" variant="outline" onClick={() => setShowHowItWorks(true)} className="rounded-2xl h-14 px-8 text-base font-medium border-2 hover:bg-secondary hover:text-foreground">
+              <Button size="lg" variant="outline" onClick={() => setShowHowItWorks(true)} className="rounded-2xl h-12 md:h-14 px-6 md:px-8 text-base font-medium border-2 hover:bg-secondary hover:text-foreground">
                 Learn More
               </Button>
             </div>
 
             {/* Stats */}
-            <div className="flex gap-8 pt-8">
+            <div className="flex flex-wrap gap-6 md:gap-8 pt-6 md:pt-8">
               <div>
-                <div className="text-3xl font-bold text-foreground">10k+</div>
+                <div className="text-2xl md:text-3xl font-bold text-foreground">10k+</div>
                 <div className="text-sm text-muted-foreground">Profiles Analyzed</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-foreground">95%</div>
+                <div className="text-2xl md:text-3xl font-bold text-foreground">95%</div>
                 <div className="text-sm text-muted-foreground">Accuracy Rate</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-foreground">50+</div>
+                <div className="text-2xl md:text-3xl font-bold text-foreground">50+</div>
                 <div className="text-sm text-muted-foreground">Skill Categories</div>
               </div>
             </div>
           </div>
 
           {/* Right Illustration */}
-          <div className="relative animate-scale-in">
+          <div className="relative animate-scale-in hidden lg:block">
             <div className="absolute -inset-4 gradient-primary opacity-20 blur-3xl rounded-full" />
             <GlassCard className="relative overflow-hidden">
               <img src={heroImage} alt="AI Skills Discovery Illustration" className="w-full h-auto rounded-2xl" />
@@ -113,10 +119,10 @@ const Onboarding = () => {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end items-center gap-4 text-sm text-muted-foreground pt-4">
+        <div className="flex justify-center md:justify-end items-center gap-4 text-xs md:text-sm text-muted-foreground pt-4">
           <span>© SkillSense 2025</span>
-          <a href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</a>
-          <a href="/terms" className="hover:text-foreground transition-colors">Terms and Conditions</a>
+          <a href="/privacy" className="hover:text-foreground transition-colors hidden sm:inline">Privacy Policy</a>
+          <a href="/terms" className="hover:text-foreground transition-colors hidden sm:inline">Terms and Conditions</a>
         </div>
       </div>
 

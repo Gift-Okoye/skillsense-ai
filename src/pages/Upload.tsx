@@ -10,6 +10,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { MobileMenu } from "@/components/MobileMenu";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -122,10 +123,10 @@ const Upload = () => {
       
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
-      <div className="relative container mx-auto px-4 py-8">
+      <div className="relative container mx-auto px-4 py-6 md:py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-16">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between mb-12 md:mb-16">
+          <div className="flex items-center gap-2 md:gap-4">
             <Button
               variant="ghost"
               size="icon"
@@ -137,34 +138,38 @@ const Upload = () => {
             <img 
               src={logo} 
               alt="SkillSense Logo" 
-              className="h-10 w-auto"
+              className="h-8 md:h-10 w-auto"
             />
           </div>
-          <ThemeToggle />
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
+          <div className="md:hidden">
+            <MobileMenu />
+          </div>
         </div>
 
         {/* Main Content */}
-        <div className="max-w-4xl mx-auto space-y-12">
-          <div className="text-center space-y-4 animate-fade-in">
-            <h1 className="text-4xl lg:text-5xl font-heading font-bold">
+        <div className="max-w-4xl mx-auto space-y-8 md:space-y-12">
+          <div className="text-center space-y-4 animate-fade-in px-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold">
               Upload Your Profile
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Choose how you'd like to analyze your skills. Upload your CV or connect your LinkedIn profile.
             </p>
           </div>
 
           {/* Upload Options */}
-          <div className="grid md:grid-cols-2 gap-8 animate-scale-in">
-            {/* CV Upload */}
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 animate-scale-in px-4">{/* CV Upload */}
             <GlassCard hover className="space-y-6">
-              <div className="w-16 h-16 rounded-3xl gradient-primary flex items-center justify-center mx-auto">
-                <FileText className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-3xl gradient-primary flex items-center justify-center mx-auto">
+                <FileText className="w-6 h-6 md:w-8 md:h-8 text-white" />
               </div>
               
               <div className="text-center space-y-2">
-                <h3 className="text-2xl font-heading font-semibold">Upload CV</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl md:text-2xl font-heading font-semibold">Upload CV</h3>
+                <p className="text-sm md:text-base text-muted-foreground">
                   Upload your resume in PDF or DOCX format
                 </p>
               </div>

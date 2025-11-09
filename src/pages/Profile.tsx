@@ -13,6 +13,7 @@ import logo from "@/assets/skillsense-logo.png";
 import gridPattern from "@/assets/grid-pattern.png";
 import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { MobileMenu } from "@/components/MobileMenu";
 const Profile = () => {
   const navigate = useNavigate();
   const {
@@ -177,17 +178,18 @@ const Profile = () => {
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
       
-      <div className="relative container mx-auto px-4 py-8">
+      <div className="relative container mx-auto px-4 py-4 md:py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between mb-6 md:mb-8 flex-wrap gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")} className="rounded-2xl hover:bg-secondary hover:text-foreground">
               <ArrowLeft className="w-5 h-5" />
             </Button>
-            <img src={logo} alt="SkillSense Logo" className="h-10 w-auto" />
+            <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto" />
           </div>
 
-          <div className="flex gap-3">
+          {/* Desktop actions */}
+          <div className="hidden md:flex gap-3">
             <ThemeToggle />
             {isDownloading ? <div className="flex items-center gap-3 px-4 py-2 rounded-2xl border-2 border-primary bg-primary/5 min-w-[160px]">
                 <div className="flex-1">
@@ -207,6 +209,16 @@ const Profile = () => {
             <PublishDialog />
             <ShareDropdown />
           </div>
+
+          {/* Mobile Menu */}
+          <div className="md:hidden">
+            <MobileMenu 
+              showDownload 
+              showShare 
+              showPublish 
+              onDownload={handleDownload}
+            />
+          </div>
         </div>
 
         {/* Profile Content */}
@@ -215,34 +227,35 @@ const Profile = () => {
           <GlassCard className="relative overflow-hidden animate-fade-in">
             
             <div className="relative pt-8 rounded-sm">
-              <div className="flex md:flex-row gap-8 items-start md:items-center">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
                 <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                  <Avatar className="w-32 h-32 border-4 border-background shadow-lg">
+                  <Avatar className="w-24 h-24 md:w-32 md:h-32 border-4 border-background shadow-lg">
                     {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
-                    <AvatarFallback className="text-4xl font-bold gradient-primary text-white">
+                    <AvatarFallback className="text-2xl md:text-4xl font-bold gradient-primary text-white">
                       JD
                     </AvatarFallback>
                   </Avatar>
                   <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Camera className="w-8 h-8 text-white" />
+                    <Camera className="w-6 h-6 md:w-8 md:h-8 text-white" />
                   </div>
                   <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                 </div>
 
-                <div className="flex-1 space-y-4">
+                <div className="flex-1 space-y-4 text-center md:text-left">
                   <div>
-                    <h1 className="text-4xl font-heading font-bold mb-2">John Doe</h1>
-                    <p className="text-xl text-muted-foreground">Senior Software Engineer</p>
+                    <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2">John Doe</h1>
+                    <p className="text-lg md:text-xl text-muted-foreground">Senior Software Engineer</p>
                   </div>
 
-                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                  <div className="flex flex-wrap gap-3 md:gap-4 text-sm text-muted-foreground justify-center md:justify-start">
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
                       <span>San Francisco, CA</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Mail className="w-4 h-4" />
-                      <span>john.doe@email.com</span>
+                      <span className="hidden sm:inline">john.doe@email.com</span>
+                      <span className="sm:hidden">Email</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Award className="w-4 h-4" />

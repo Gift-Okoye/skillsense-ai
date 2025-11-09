@@ -13,7 +13,11 @@ import { Label } from "@/components/ui/label";
 import { Globe, Check, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export const PublishDialog = () => {
+interface PublishDialogProps {
+  isMobile?: boolean;
+}
+
+export const PublishDialog = ({ isMobile = false }: PublishDialogProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [useCustomDomain, setUseCustomDomain] = useState(false);
   const [customDomain, setCustomDomain] = useState("");
@@ -51,7 +55,7 @@ export const PublishDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="rounded-2xl border-2">
+        <Button variant="outline" className={`rounded-2xl border-2 ${isMobile ? 'w-full justify-start' : ''}`}>
           <Globe className="w-4 h-4 mr-2" />
           Publish
         </Button>

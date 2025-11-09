@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/skillsense-logo.png";
+import { MobileMenu } from "@/components/MobileMenu";
 
 const DashboardEnhanced = () => {
   const navigate = useNavigate();
@@ -174,7 +175,7 @@ const DashboardEnhanced = () => {
       
       <div className="relative container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 gap-4 flex-wrap">
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
@@ -187,28 +188,35 @@ const DashboardEnhanced = () => {
             <img 
               src={logo} 
               alt="SkillSense Logo" 
-              className="h-10 w-auto"
+              className="h-8 md:h-10 w-auto"
             />
-            <div className="ml-4">
-              <h1 className="text-2xl font-heading font-bold">Enhanced Dashboard</h1>
-              <p className="text-sm text-muted-foreground">Modern UX Features Demo</p>
+            <div className="ml-2 md:ml-4 hidden sm:block">
+              <h1 className="text-xl md:text-2xl font-heading font-bold">Enhanced Dashboard</h1>
+              <p className="text-xs md:text-sm text-muted-foreground">Modern UX Features Demo</p>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex gap-2">
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
+            <div className="md:hidden">
+              <MobileMenu />
+            </div>
+          </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           {/* Row 1: Skill Insights */}
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
             <div>
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
                 <span>🔍</span> AI Skill Insights
               </h2>
               <SkillInsightCard {...skillWithSources} />
             </div>
             <div>
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
                 <span>💬</span> Feedback Loop
               </h2>
               <FeedbackPrompt skillName="React.js" insightType="skill_detection" />
@@ -216,15 +224,15 @@ const DashboardEnhanced = () => {
           </div>
 
           {/* Row 2: Growth & Learning */}
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
             <div>
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
                 <span>📈</span> Growth Tracker
               </h2>
               <GrowthTracker trends={growthTrends} />
             </div>
             <div>
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
                 <span>📚</span> Learning Recommendations
               </h2>
               <LearningRecommendations recommendations={learningCourses} />
@@ -233,7 +241,7 @@ const DashboardEnhanced = () => {
 
           {/* Row 3: Career Fit */}
           <div>
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
               <span>💼</span> Career Fit Suggestions
             </h2>
             <CareerFitSuggestions suggestions={careerMatches} />
@@ -241,7 +249,7 @@ const DashboardEnhanced = () => {
 
           {/* Row 4: Achievements */}
           <div>
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
               <span>🏆</span> Gamified Achievements
             </h2>
             <AchievementsBadges achievements={achievements} />

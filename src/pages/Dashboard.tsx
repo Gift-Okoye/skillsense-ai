@@ -16,6 +16,9 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { MobileMenu } from "@/components/MobileMenu";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 const Dashboard = () => {
   const navigate = useNavigate();
   const {
@@ -24,6 +27,7 @@ const Dashboard = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [showAIPanel, setShowAIPanel] = useState(false);
+  const isMobile = useIsMobile();
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -359,15 +363,15 @@ const Dashboard = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-8 relative">
         {/* Header */}
         <div className="flex items-center justify-between mb-4 md:mb-8 flex-wrap gap-4">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <Button variant="ghost" size="icon" onClick={() => navigate("/analysis")} className="rounded-2xl hover:bg-secondary hover:text-foreground">
               <ArrowLeft className="w-5 h-5 text-foreground" />
             </Button>
-            <img src={logo} alt="SkillSense Logo" className="h-10 w-auto" />
+            <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto" />
           </div>
 
-          {/* Center Navigation */}
-          <nav className="flex gap-1 md:gap-2 bg-muted/50 backdrop-blur-sm rounded-2xl p-1.5 order-3 lg:order-2 w-full lg:w-auto justify-center">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex gap-2 bg-muted/50 backdrop-blur-sm rounded-2xl p-1.5">
             <Button variant={activeSection === "skills" ? "default" : "ghost"} size="sm" onClick={() => setActiveSection("skills")} className="rounded-xl">
               <Award className="w-4 h-4 mr-2" />
               Skills
@@ -382,15 +386,54 @@ const Dashboard = () => {
             </Button>
           </nav>
           
-          <div className="flex gap-2 md:gap-3 order-2 lg:order-3">
-            <ThemeToggle />
-            <Button variant="outline" className="rounded-2xl border-2 hidden md:flex" onClick={() => navigate("/profile")}>
-              <User className="w-4 h-4 mr-2" />
-              <span className="hidden lg:inline">View Profile</span>
+          <div className="flex gap-2 md:gap-3 items-center">
+            {/* Profile Picture on Mobile - acts as profile link */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => navigate("/profile")} 
+              className="lg:hidden rounded-full p-0 w-10 h-10"
+            >
+              <Avatar className="w-10 h-10 border-2 border-primary/20">
+                {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
+                <AvatarFallback className="text-sm font-semibold gradient-primary text-white">
+                  JD
+                </AvatarFallback>
+              </Avatar>
             </Button>
-            <ShareDropdown />
+
+            {/* Desktop controls */}
+            <div className="hidden lg:flex gap-3">
+              <ThemeToggle />
+              <Button variant="outline" className="rounded-2xl border-2" onClick={() => navigate("/profile")}>
+                <User className="w-4 h-4 mr-2" />
+                <span className="hidden xl:inline">View Profile</span>
+              </Button>
+              <ShareDropdown />
+            </div>
+
+            {/* Mobile Menu */}
+            <div className="lg:hidden">
+              <MobileMenu showShare />
+            </div>
           </div>
         </div>
+
+        {/* Mobile Navigation Tabs */}
+        <nav className="flex lg:hidden gap-2 bg-muted/50 backdrop-blur-sm rounded-2xl p-1.5 mb-6">
+          <Button variant={activeSection === "skills" ? "default" : "ghost"} size="sm" onClick={() => setActiveSection("skills")} className="rounded-xl flex-1">
+            <Award className="w-4 h-4 mr-1" />
+            Skills
+          </Button>
+          <Button variant={activeSection === "jobs" ? "default" : "ghost"} size="sm" onClick={() => setActiveSection("jobs")} className="rounded-xl flex-1">
+            <Briefcase className="w-4 h-4 mr-1" />
+            Jobs
+          </Button>
+          <Button variant={activeSection === "courses" ? "default" : "ghost"} size="sm" onClick={() => setActiveSection("courses")} className="rounded-xl flex-1">
+            <GraduationCap className="w-4 h-4 mr-1" />
+            Courses
+          </Button>
+        </nav>
 
         {/* Main Content */}
         {activeSection === "skills" && <div className="w-full">
@@ -681,12 +724,12 @@ const Dashboard = () => {
       {/* Floating AI Assistant Button */}
       <button onClick={() => setShowAIPanel(true)} className="fixed bottom-8 right-8 z-40 group" aria-label="Open AI Assistant">
         <div className="bg-background dark:bg-background shadow-lg hover:shadow-xl transition-all duration-300 rounded-full p-4 border border-border hover:scale-110">
-          <img src={aiIcon} alt="AI Assistant" className="w-12 h-12" />
+          <img src={aiIcon} alt="AI Assistant" className="w-8 h-8 md:w-12 md:h-12" />
         </div>
       </button>
 
-      {/* AI Assistant Panel */}
-      {showAIPanel && <>
+      {/* AI Assistant Panel - Desktop */}
+      {!isMobile && showAIPanel && <>
           <Button variant="ghost" size="icon" onClick={() => setShowAIPanel(false)} className="fixed right-[492px] top-4 z-50 rounded-2xl bg-background/95 backdrop-blur-xl border border-border hover:bg-background">
             <X className="w-5 h-5" />
           </Button>
@@ -694,6 +737,15 @@ const Dashboard = () => {
             <AIAssistantPanel onClose={() => setShowAIPanel(false)} />
           </div>
         </>}
+
+      {/* AI Assistant Sheet - Mobile */}
+      {isMobile && (
+        <Sheet open={showAIPanel} onOpenChange={setShowAIPanel}>
+          <SheetContent side="bottom" className="h-[85vh] p-0">
+            <AIAssistantPanel onClose={() => setShowAIPanel(false)} isMobile />
+          </SheetContent>
+        </Sheet>
+      )}
     </div>;
 };
 export default Dashboard;

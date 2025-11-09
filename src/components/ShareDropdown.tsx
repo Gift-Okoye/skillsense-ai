@@ -9,7 +9,11 @@ import { Share2, Twitter, Linkedin, Facebook, Link2, Check } from "lucide-react"
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
-export const ShareDropdown = () => {
+interface ShareDropdownProps {
+  isMobile?: boolean;
+}
+
+export const ShareDropdown = ({ isMobile = false }: ShareDropdownProps) => {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
   const profileUrl = "https://john-doe.skillsense.app";
@@ -48,7 +52,7 @@ export const ShareDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="gradient-primary text-primary-foreground rounded-2xl hover-glow">
+        <Button className={`gradient-primary text-primary-foreground rounded-2xl hover-glow ${isMobile ? 'w-full justify-start' : ''}`}>
           <Share2 className="w-4 h-4 mr-2" />
           Share
         </Button>
