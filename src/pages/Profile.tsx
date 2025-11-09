@@ -216,8 +216,8 @@ const Profile = () => {
             {/* Background gradient */}
             <div className="absolute top-0 left-0 right-0 h-32 gradient-primary opacity-10" />
             
-            <div className="relative pt-8 rounded-sm bg-slate-50">
-              <div className="flex  md:flex-row gap-8 items-start md:items-center bg-slate-50">
+            <div className="relative pt-8 rounded-sm">
+              <div className="flex md:flex-row gap-8 items-start md:items-center">
                 <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
                   <Avatar className="w-32 h-32 border-4 border-background shadow-lg">
                     {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
