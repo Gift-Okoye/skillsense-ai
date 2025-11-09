@@ -122,88 +122,90 @@ const Onboarding = () => {
 
       {/* Auth Modal */}
       <Dialog open={showAuthModal} onOpenChange={setShowAuthModal}>
-        <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto mx-6 rounded-3xl">
-          <DialogHeader>
-            <DialogTitle>Welcome to SkillSense</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="sm:max-w-[425px] max-h-[85vh] mx-6 rounded-3xl p-4 sm:p-6">
+          <DialogHeader className="space-y-1 pb-2">
+            <DialogTitle className="text-lg sm:text-xl">Welcome to SkillSense</DialogTitle>
+            <DialogDescription className="text-xs sm:text-sm">
               Sign in to your account or create a new one to get started.
             </DialogDescription>
           </DialogHeader>
           
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="signin" className="space-y-4">
-              <div className="flex flex-col gap-3">
-                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
-                  <Mail className="w-5 h-5" />
-                  Continue with Google
-                </Button>
-                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
-                  <Linkedin className="w-5 h-5" />
-                  Continue with LinkedIn
-                </Button>
-              </div>
+          <div className="overflow-y-auto max-h-[calc(85vh-140px)] pr-1">
+            <Tabs defaultValue="signin" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-3">
+                <TabsTrigger value="signin">Sign In</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              </TabsList>
               
-              <div className="relative">
-                <Separator />
-                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">
-                  Or continue with email
-                </span>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="signin-email">Email</Label>
-                <Input id="signin-email" type="email" placeholder="your@email.com" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="signin-password">Password</Label>
-                <Input id="signin-password" type="password" placeholder="••••••••" />
-              </div>
-              <Button className="w-full" onClick={() => navigate("/upload")}>
-                Sign In
-              </Button>
-            </TabsContent>
-            
-            <TabsContent value="signup" className="space-y-4">
-              <div className="flex flex-col gap-3">
-                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
-                  <Mail className="w-5 h-5" />
-                  Continue with Google
+              <TabsContent value="signin" className="space-y-3 mt-0">
+                <div className="flex flex-col gap-2">
+                  <Button variant="outline" className="w-full h-10 gap-2 text-sm" onClick={() => navigate("/upload")}>
+                    <Mail className="w-4 h-4" />
+                    Continue with Google
+                  </Button>
+                  <Button variant="outline" className="w-full h-10 gap-2 text-sm" onClick={() => navigate("/upload")}>
+                    <Linkedin className="w-4 h-4" />
+                    Continue with LinkedIn
+                  </Button>
+                </div>
+                
+                <div className="relative py-2">
+                  <Separator />
+                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">
+                    Or continue with email
+                  </span>
+                </div>
+                
+                <div className="space-y-1.5">
+                  <Label htmlFor="signin-email" className="text-sm">Email</Label>
+                  <Input id="signin-email" type="email" placeholder="your@email.com" className="h-10" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="signin-password" className="text-sm">Password</Label>
+                  <Input id="signin-password" type="password" placeholder="••••••••" className="h-10" />
+                </div>
+                <Button className="w-full h-10 mt-2" onClick={() => navigate("/upload")}>
+                  Sign In
                 </Button>
-                <Button variant="outline" className="w-full h-11 gap-2" onClick={() => navigate("/upload")}>
-                  <Linkedin className="w-5 h-5" />
-                  Continue with LinkedIn
+              </TabsContent>
+              
+              <TabsContent value="signup" className="space-y-3 mt-0">
+                <div className="flex flex-col gap-2">
+                  <Button variant="outline" className="w-full h-10 gap-2 text-sm" onClick={() => navigate("/upload")}>
+                    <Mail className="w-4 h-4" />
+                    Continue with Google
+                  </Button>
+                  <Button variant="outline" className="w-full h-10 gap-2 text-sm" onClick={() => navigate("/upload")}>
+                    <Linkedin className="w-4 h-4" />
+                    Continue with LinkedIn
+                  </Button>
+                </div>
+                
+                <div className="relative py-2">
+                  <Separator />
+                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">
+                    Or continue with email
+                  </span>
+                </div>
+                
+                <div className="space-y-1.5">
+                  <Label htmlFor="signup-name" className="text-sm">Full Name</Label>
+                  <Input id="signup-name" type="text" placeholder="John Doe" className="h-10" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="signup-email" className="text-sm">Email</Label>
+                  <Input id="signup-email" type="email" placeholder="your@email.com" className="h-10" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="signup-password" className="text-sm">Password</Label>
+                  <Input id="signup-password" type="password" placeholder="••••••••" className="h-10" />
+                </div>
+                <Button className="w-full h-10 mt-2" onClick={() => navigate("/upload")}>
+                  Create Account
                 </Button>
-              </div>
-              
-              <div className="relative">
-                <Separator />
-                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-2 text-xs text-muted-foreground">
-                  Or continue with email
-                </span>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="signup-name">Full Name</Label>
-                <Input id="signup-name" type="text" placeholder="John Doe" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="signup-email">Email</Label>
-                <Input id="signup-email" type="email" placeholder="your@email.com" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="signup-password">Password</Label>
-                <Input id="signup-password" type="password" placeholder="••••••••" />
-              </div>
-              <Button className="w-full" onClick={() => navigate("/upload")}>
-                Create Account
-              </Button>
-            </TabsContent>
-          </Tabs>
+              </TabsContent>
+            </Tabs>
+          </div>
         </DialogContent>
       </Dialog>
 
