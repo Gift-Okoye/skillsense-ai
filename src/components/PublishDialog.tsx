@@ -60,7 +60,7 @@ export const PublishDialog = ({ isMobile = false }: PublishDialogProps) => {
           Publish
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[calc(100vw-3rem)] sm:max-w-[500px] max-h-[90vh] overflow-y-auto rounded-3xl">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle className="text-2xl flex items-center gap-2">
             <Globe className="w-6 h-6" />

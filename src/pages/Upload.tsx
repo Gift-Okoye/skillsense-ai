@@ -135,13 +135,11 @@ const Upload = () => {
             >
               <ArrowLeft className="w-5 h-5 text-foreground" />
             </Button>
-            <a href="/" className="flex items-center">
-              <img 
-                src={logo} 
-                alt="SkillSense Logo" 
-                className="h-8 md:h-10 w-auto hover:opacity-80 transition-opacity"
-              />
-            </a>
+            <img 
+              src={logo} 
+              alt="SkillSense Logo" 
+              className="h-8 md:h-10 w-auto"
+            />
           </div>
           <div className="hidden md:block">
             <ThemeToggle />
@@ -247,7 +245,7 @@ const Upload = () => {
 
       {/* Processing Modal */}
       <Dialog open={isProcessing} onOpenChange={() => {}}>
-        <DialogContent className="w-[calc(100vw-3rem)] sm:max-w-[500px] max-h-[90vh] overflow-y-auto rounded-3xl">
+        <DialogContent className="sm:max-w-[500px]">
           <div className="absolute inset-0 pointer-events-none opacity-5" style={{
             backgroundImage: `url(${gridPattern})`,
             backgroundSize: "cover"
@@ -283,7 +281,7 @@ const Upload = () => {
 
       {/* Error Modal */}
       <Dialog open={showError} onOpenChange={setShowError}>
-        <DialogContent className="w-[calc(100vw-3rem)] sm:max-w-[425px] max-h-[90vh] overflow-y-auto rounded-3xl">
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">

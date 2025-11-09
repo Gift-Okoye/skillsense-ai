@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Download, Sparkles, Mail, MapPin, Award, Camera, CheckCircle2 } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
 import gridPattern from "@/assets/grid-pattern.png";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { MobileMenu } from "@/components/MobileMenu";
 const Profile = () => {
@@ -21,14 +21,6 @@ const Profile = () => {
   } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-
-  // Load saved profile image on mount
-  useEffect(() => {
-    const savedImage = localStorage.getItem('skillsense_profile_image');
-    if (savedImage) {
-      setProfileImage(savedImage);
-    }
-  }, []);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [isDownloading, setIsDownloading] = useState(false);
   const allSkills = [{
@@ -141,11 +133,9 @@ const Profile = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result as string);
-        // Auto-save to localStorage
-        localStorage.setItem('skillsense_profile_image', reader.result as string);
         toast({
           title: "Profile image updated",
-          description: "Your profile image has been auto-saved"
+          description: "Your profile image has been changed successfully"
         });
       };
       reader.readAsDataURL(file);
@@ -195,9 +185,7 @@ const Profile = () => {
             <Button variant="ghost" size="icon" onClick={() => navigate("/dashboard")} className="rounded-2xl hover:bg-secondary hover:text-foreground">
               <ArrowLeft className="w-5 h-5" />
             </Button>
-            <a href="/" className="flex items-center">
-              <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto hover:opacity-80 transition-opacity" />
-            </a>
+            <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto" />
           </div>
 
           {/* Desktop actions */}
@@ -239,7 +227,20 @@ const Profile = () => {
           <GlassCard className="relative overflow-hidden animate-fade-in">
             
             <div className="relative pt-8 rounded-sm">
-              <div className="flex flex-col-reverse md:flex-row gap-6 md:gap-8 items-center md:items-start">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-center md:items-start">
+                <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                  <Avatar className="w-24 h-24 md:w-32 md:h-32 border-4 border-background shadow-lg">
+                    {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
+                    <AvatarFallback className="text-2xl md:text-4xl font-bold gradient-primary text-white">
+                      JD
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Camera className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                  </div>
+                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                </div>
+
                 <div className="flex-1 space-y-4 text-center md:text-left">
                   <div>
                     <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2">John Doe</h1>
@@ -262,19 +263,6 @@ const Profile = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                  <Avatar className="w-24 h-24 md:w-32 md:h-32 border-4 border-background shadow-lg">
-                    {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
-                    <AvatarFallback className="text-2xl md:text-4xl font-bold gradient-primary text-white">
-                      JD
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Camera className="w-6 h-6 md:w-8 md:h-8 text-white" />
-                  </div>
-                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                </div>
               </div>
             </div>
           </GlassCard>
@@ -289,7 +277,7 @@ const Profile = () => {
               </div>
               <h2 className="text-2xl font-heading font-semibold">AI-Generated Summary</h2>
             </div>
-            <p className="text-muted-foreground leading-relaxed text-sm md:text-lg">
+            <p className="text-muted-foreground leading-relaxed text-lg">
               An accomplished software engineer with over 5 years of experience in full-stack development. 
               Demonstrates strong technical proficiency in modern web technologies including React, TypeScript, 
               and Node.js. Known for exceptional problem-solving abilities and leadership skills. Has proven 

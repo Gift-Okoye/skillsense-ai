@@ -59,12 +59,12 @@ export const AIAssistantPanel = ({ onClose, isMobile = false }: AIAssistantPanel
               <p className="text-xs text-muted-foreground">Your career companion</p>
             </div>
           </div>
-          {onClose && (
+          {isMobile && onClose && (
             <Button 
               variant="ghost" 
               size="icon" 
               onClick={onClose}
-              className="rounded-2xl hover:bg-secondary md:hidden"
+              className="rounded-2xl hover:bg-secondary"
             >
               <X className="w-5 h-5" />
             </Button>
