@@ -235,7 +235,7 @@ const Dashboard = () => {
             {/* Skills Section */}
             <div className="w-full space-y-8">
               {/* Add Skill & AI Recommendations Container */}
-              <div className="grid lg:grid-cols-2 gap-6">
+              <div className="flex flex-row gap-x-8">
                 {/* Add New Skill & AI Recommendations (add_rec_container) */}
                 <div className="w-[130%] flex flex-col gap-4 flex-grow">
                   {/* Add New Skill */}
