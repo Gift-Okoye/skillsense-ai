@@ -252,7 +252,7 @@ const Upload = () => {
 
       {/* Processing Modal */}
       <Dialog open={isProcessing} onOpenChange={() => {}}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="w-[80%] sm:max-w-[500px]">
           <div className="absolute inset-0 pointer-events-none opacity-5" style={{
             backgroundImage: `url(${gridPattern})`,
             backgroundSize: "cover"
@@ -288,7 +288,7 @@ const Upload = () => {
 
       {/* Error Modal */}
       <Dialog open={showError} onOpenChange={setShowError}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="w-[80%] sm:max-w-[425px]">
           <DialogHeader>
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
