@@ -163,6 +163,78 @@ const Dashboard = () => {
     matchScore: 85,
     postedDate: "3 days ago",
     applied: false
+  }, {
+    id: "5",
+    title: "React Native Developer",
+    company: "MobileFirst",
+    location: "Seattle, WA",
+    salary: "$140k - $170k",
+    matchScore: 90,
+    postedDate: "4 days ago",
+    applied: false
+  }, {
+    id: "6",
+    title: "TypeScript Specialist",
+    company: "CodeCraft",
+    location: "Remote",
+    salary: "$135k - $165k",
+    matchScore: 93,
+    postedDate: "1 day ago",
+    applied: false
+  }, {
+    id: "7",
+    title: "Web3 Frontend Developer",
+    company: "BlockchainCo",
+    location: "Miami, FL",
+    salary: "$160k - $190k",
+    matchScore: 82,
+    postedDate: "6 days ago",
+    applied: false
+  }, {
+    id: "8",
+    title: "Senior Software Engineer",
+    company: "CloudSystems",
+    location: "Denver, CO",
+    salary: "$145k - $175k",
+    matchScore: 89,
+    postedDate: "2 days ago",
+    applied: false
+  }, {
+    id: "9",
+    title: "JavaScript Architect",
+    company: "TechInnovate",
+    location: "Boston, MA",
+    salary: "$175k - $210k",
+    matchScore: 91,
+    postedDate: "3 days ago",
+    applied: false
+  }, {
+    id: "10",
+    title: "Frontend Team Lead",
+    company: "DataWorks",
+    location: "Remote",
+    salary: "$165k - $195k",
+    matchScore: 87,
+    postedDate: "1 week ago",
+    applied: false
+  }, {
+    id: "11",
+    title: "React Specialist",
+    company: "AgileDevs",
+    location: "Portland, OR",
+    salary: "$125k - $155k",
+    matchScore: 86,
+    postedDate: "5 days ago",
+    applied: false
+  }, {
+    id: "12",
+    title: "Principal Engineer",
+    company: "ScaleUp Tech",
+    location: "Los Angeles, CA",
+    salary: "$200k - $250k",
+    matchScore: 94,
+    postedDate: "2 days ago",
+    applied: false
   }]);
   const courses = [{
     id: "1",
@@ -195,6 +267,70 @@ const Dashboard = () => {
     duration: "20 hours",
     level: "Intermediate",
     skillMatch: ["Cloud Architecture", "AWS"],
+    rating: 4.9
+  }, {
+    id: "5",
+    title: "React Performance Optimization",
+    provider: "Udemy",
+    duration: "8 hours",
+    level: "Advanced",
+    skillMatch: ["React.js", "TypeScript"],
+    rating: 4.6
+  }, {
+    id: "6",
+    title: "Node.js Microservices",
+    provider: "Pluralsight",
+    duration: "10 hours",
+    level: "Intermediate",
+    skillMatch: ["Node.js", "API Design"],
+    rating: 4.8
+  }, {
+    id: "7",
+    title: "Advanced SQL Techniques",
+    provider: "DataCamp",
+    duration: "15 hours",
+    level: "Advanced",
+    skillMatch: ["SQL", "Python"],
+    rating: 4.7
+  }, {
+    id: "8",
+    title: "Communication for Engineers",
+    provider: "LinkedIn Learning",
+    duration: "3 hours",
+    level: "All Levels",
+    skillMatch: ["Communication", "Leadership"],
+    rating: 4.5
+  }, {
+    id: "9",
+    title: "GraphQL Complete Guide",
+    provider: "Udemy",
+    duration: "12 hours",
+    level: "Intermediate",
+    skillMatch: ["API Design", "Node.js"],
+    rating: 4.8
+  }, {
+    id: "10",
+    title: "Docker & Kubernetes",
+    provider: "A Cloud Guru",
+    duration: "18 hours",
+    level: "Intermediate",
+    skillMatch: ["Cloud Architecture", "Agile Methodologies"],
+    rating: 4.9
+  }, {
+    id: "11",
+    title: "Problem Solving Mastery",
+    provider: "Coursera",
+    duration: "5 weeks",
+    level: "All Levels",
+    skillMatch: ["Problem Solving", "Team Collaboration"],
+    rating: 4.6
+  }, {
+    id: "12",
+    title: "Full Stack Development",
+    provider: "Frontend Masters",
+    duration: "25 hours",
+    level: "Advanced",
+    skillMatch: ["React.js", "Node.js", "TypeScript"],
     rating: 4.9
   }];
   const handleAddSkill = () => {
