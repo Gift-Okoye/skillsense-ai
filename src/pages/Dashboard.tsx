@@ -332,7 +332,7 @@ const Dashboard = () => {
               {/* Hard Skills & Quick Actions/Stats Container */}
               <div className="flex flex-row gap-x-6">
                 {/* Hard Skills */}
-                <GlassCard className="animate-fade-in">
+                <GlassCard className="animate-fade-in w-[10%]">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
                       <Award className="w-5 h-5 text-white" />
