@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "@/assets/skillsense-logo.png";
 import gridPattern from "@/assets/grid-pattern.png";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Analysis = () => {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ const Analysis = () => {
               className="h-10 w-auto"
             />
           </div>
+          <ThemeToggle />
         </div>
 
         <div className="flex items-center justify-center min-h-[calc(100vh-120px)]">

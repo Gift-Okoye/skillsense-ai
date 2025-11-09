@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -139,6 +140,7 @@ const Upload = () => {
               className="h-10 w-auto"
             />
           </div>
+          <ThemeToggle />
         </div>
 
         {/* Main Content */}

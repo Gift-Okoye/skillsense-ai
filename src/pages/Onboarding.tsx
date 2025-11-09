@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/ThemeToggle";
 const Onboarding = () => {
   const navigate = useNavigate();
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -38,6 +39,7 @@ const Onboarding = () => {
           
           {/* Social Links */}
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-secondary hover:bg-primary/10 flex items-center justify-center transition-smooth hover:scale-110 group">
               <MessageCircle className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-smooth" />
             </a>

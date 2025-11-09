@@ -8,7 +8,7 @@ import { AIRecommendations } from "@/components/AIRecommendations";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NavLink } from "@/components/NavLink";
 import { useNavigate } from "react-router-dom";
-import { Download, Share2, User, Briefcase, Award, ArrowLeft, Camera, X, Plus, GraduationCap, MapPin, DollarSign, Clock, CheckCircle2, ExternalLink } from "lucide-react";
+import { Download, Share2, User, Briefcase, Award, ArrowLeft, Camera, X, Plus, GraduationCap, MapPin, DollarSign, Clock, CheckCircle2, ExternalLink, Sparkles, TrendingUp } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
 import aiIcon from "@/assets/ai-assistant-icon.png";
 import { useState, useRef } from "react";
@@ -246,31 +246,188 @@ const Dashboard = () => {
         {/* Main Content */}
         {activeSection === "skills" && (
           <div className="grid lg:grid-cols-12 gap-8">
-            {/* Left Panel - Skills & Features */}
+            {/* Left Panel - Skills */}
             <div className="lg:col-span-8 space-y-8">
-              {/* AI Recommendations */}
-              <AIRecommendations />
+              {/* Add Skill & AI Recommendations Container */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {/* Add New Skill & AI Recommendations (add_rec_container) */}
+                <div className="space-y-6">
+                  {/* Add New Skill */}
+                  <GlassCard className="animate-fade-in">
+                    <h3 className="font-semibold mb-3 flex items-center gap-2">
+                      <Plus className="w-4 h-4" />
+                      Add New Skill
+                    </h3>
+                    <div className="flex gap-2">
+                      <Input
+                        value={newSkill}
+                        onChange={(e) => setNewSkill(e.target.value)}
+                        placeholder="e.g., Docker, GraphQL..."
+                        className="rounded-2xl"
+                      />
+                      <Button
+                        onClick={handleAddSkill}
+                        className="rounded-2xl gradient-primary text-white"
+                      >
+                        Add
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Add skills AI might have missed
+                    </p>
+                  </GlassCard>
 
-              {/* Hard Skills */}
-              <GlassCard className="animate-fade-in">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
-                    <Award className="w-5 h-5 text-white" />
-                  </div>
-                  <h2 className="text-2xl font-heading font-semibold">Hard Skills</h2>
+                  {/* AI Recommendations */}
+                  <GlassCard className="animate-fade-in flex-1">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
+                        <Sparkles className="w-5 h-5 text-white" />
+                      </div>
+                      <h2 className="text-xl font-heading font-semibold">AI Tips</h2>
+                    </div>
+                    
+                    <div className="space-y-3 max-h-[280px] overflow-y-auto pr-2">
+                      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-3 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-accent" />
+                          <h4 className="font-semibold text-sm">Skill Gap</h4>
+                        </div>
+                        <p className="text-xs text-muted-foreground">Consider learning GraphQL to complement your API design.</p>
+                      </div>
+                      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-3 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <Briefcase className="w-4 h-4 text-accent" />
+                          <h4 className="font-semibold text-sm">Career Path</h4>
+                        </div>
+                        <p className="text-xs text-muted-foreground">On track for Tech Lead role within 2 years.</p>
+                      </div>
+                      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-3 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <GraduationCap className="w-4 h-4 text-accent" />
+                          <h4 className="font-semibold text-sm">Learning Priority</h4>
+                        </div>
+                        <p className="text-xs text-muted-foreground">Focus on System Design and Cloud Architecture.</p>
+                      </div>
+                    </div>
+                  </GlassCard>
                 </div>
-                <div className="space-y-4">
-                  {mockSkills.hard.map((skill, index) => (
-                    <SkillProgressBar
-                      key={skill.name}
-                      skill={skill.name}
-                      confidence={skill.confidence}
-                      category={skill.category}
-                      delay={index * 100}
+
+                {/* Profile Card */}
+                <GlassCard className="animate-scale-in text-center">
+                  <div className="space-y-6">
+                  <div className="relative group cursor-pointer mx-auto w-24" onClick={() => fileInputRef.current?.click()}>
+                    <Avatar className="w-24 h-24 border-4 border-primary/20">
+                      {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
+                      <AvatarFallback className="text-2xl font-semibold gradient-primary text-white">
+                        JD
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Camera className="w-6 h-6 text-white" />
+                    </div>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
                     />
-                  ))}
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-heading font-bold mb-2">John Doe</h3>
+                    <p className="text-muted-foreground">Senior Software Engineer</p>
+                  </div>
+
+                  <div className="pt-4 border-t border-border space-y-3 text-left">
+                    <div className="flex items-center gap-3">
+                      <Briefcase className="w-5 h-5 text-muted-foreground" />
+                      <span className="text-sm">5+ years experience</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Award className="w-5 h-5 text-muted-foreground" />
+                      <span className="text-sm">14 skills identified</span>
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={() => navigate("/profile")}
+                    className="w-full gradient-primary text-primary-foreground rounded-2xl h-12 font-semibold hover-glow"
+                  >
+                    View Full Profile
+                  </Button>
+                  </div>
+                </GlassCard>
+              </div>
+
+              {/* Hard Skills & Quick Actions/Stats Container */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {/* Hard Skills */}
+                <GlassCard className="animate-fade-in">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
+                      <Award className="w-5 h-5 text-white" />
+                    </div>
+                    <h2 className="text-2xl font-heading font-semibold">Hard Skills</h2>
+                  </div>
+                  <div className="space-y-4">
+                    {mockSkills.hard.map((skill, index) => (
+                      <SkillProgressBar
+                        key={skill.name}
+                        skill={skill.name}
+                        confidence={skill.confidence}
+                        category={skill.category}
+                        delay={index * 100}
+                      />
+                    ))}
+                  </div>
+                </GlassCard>
+
+                {/* Quick Actions & Analysis Summary (quick_ana_container) */}
+                <div className="space-y-6">
+                  {/* Quick Actions */}
+                  <GlassCard className="animate-fade-in" style={{ animationDelay: "200ms" }}>
+                    <div className="space-y-4">
+                      <h3 className="font-heading font-semibold text-lg">Quick Actions</h3>
+                    <div className="space-y-3">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start rounded-2xl h-12 border-2"
+                      >
+                        <Download className="w-4 h-4 mr-3" />
+                        Download Report
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start rounded-2xl h-12 border-2"
+                      >
+                        <Share2 className="w-4 h-4 mr-3" />
+                        Share Results
+                      </Button>
+                    </div>
+                    </div>
+                  </GlassCard>
+
+                  {/* Analysis Summary */}
+                  <GlassCard className="animate-fade-in" style={{ animationDelay: "300ms" }}>
+                    <h3 className="font-heading font-semibold text-lg mb-4">Analysis Summary</h3>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Confidence Score</span>
+                        <span className="font-semibold text-lg">87%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Total Skills</span>
+                        <span className="font-semibold text-lg">14</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Top Category</span>
+                        <span className="font-semibold text-lg">Technical</span>
+                      </div>
+                    </div>
+                  </GlassCard>
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Soft & Inferred Skills - Side by Side */}
               <div className="grid md:grid-cols-2 gap-6">
@@ -316,123 +473,6 @@ const Dashboard = () => {
                   </div>
                 </GlassCard>
               </div>
-
-              {/* Add New Skill */}
-              <GlassCard className="animate-fade-in">
-                <h3 className="font-semibold mb-3 flex items-center gap-2">
-                  <Plus className="w-4 h-4" />
-                  Add New Skill
-                </h3>
-                <div className="flex gap-2">
-                  <Input
-                    value={newSkill}
-                    onChange={(e) => setNewSkill(e.target.value)}
-                    placeholder="e.g., Docker, GraphQL, AWS..."
-                    className="rounded-2xl"
-                  />
-                  <Button
-                    onClick={handleAddSkill}
-                    className="rounded-2xl gradient-primary text-white"
-                  >
-                    Add
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">
-                  Add skills that AI might have missed or newly acquired skills
-                </p>
-              </GlassCard>
-            </div>
-
-            {/* Right Panel - Profile */}
-            <div className="lg:col-span-4 space-y-6">
-              {/* Profile Card */}
-              <GlassCard className="animate-scale-in text-center">
-                <div className="space-y-6">
-                <div className="relative group cursor-pointer mx-auto w-24" onClick={() => fileInputRef.current?.click()}>
-                  <Avatar className="w-24 h-24 border-4 border-primary/20">
-                    {profileImage && <AvatarImage src={profileImage} alt="Profile" />}
-                    <AvatarFallback className="text-2xl font-semibold gradient-primary text-white">
-                      JD
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Camera className="w-6 h-6 text-white" />
-                  </div>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-heading font-bold mb-2">John Doe</h3>
-                  <p className="text-muted-foreground">Senior Software Engineer</p>
-                </div>
-
-                <div className="pt-4 border-t border-border space-y-3 text-left">
-                  <div className="flex items-center gap-3">
-                    <Briefcase className="w-5 h-5 text-muted-foreground" />
-                    <span className="text-sm">5+ years experience</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Award className="w-5 h-5 text-muted-foreground" />
-                    <span className="text-sm">14 skills identified</span>
-                  </div>
-                </div>
-
-                <Button
-                  onClick={() => navigate("/profile")}
-                  className="w-full gradient-primary text-primary-foreground rounded-2xl h-12 font-semibold hover-glow"
-                >
-                  View Full Profile
-                </Button>
-                </div>
-              </GlassCard>
-
-              {/* Quick Actions */}
-              <GlassCard className="animate-fade-in h-full" style={{ animationDelay: "200ms" }}>
-                <div className="space-y-4">
-                  <h3 className="font-heading font-semibold text-lg">Quick Actions</h3>
-                <div className="space-y-3">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start rounded-2xl h-12 border-2"
-                  >
-                    <Download className="w-4 h-4 mr-3" />
-                    Download Report
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start rounded-2xl h-12 border-2"
-                  >
-                    <Share2 className="w-4 h-4 mr-3" />
-                    Share Results
-                  </Button>
-                </div>
-                </div>
-              </GlassCard>
-
-              {/* Stats */}
-              <GlassCard className="animate-fade-in h-full" style={{ animationDelay: "300ms" }}>
-                <h3 className="font-heading font-semibold text-lg mb-4">Analysis Summary</h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Confidence Score</span>
-                    <span className="font-semibold text-lg">87%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Total Skills</span>
-                    <span className="font-semibold text-lg">14</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Top Category</span>
-                    <span className="font-semibold text-lg">Technical</span>
-                  </div>
-                </div>
-              </GlassCard>
             </div>
           </div>
         )}
