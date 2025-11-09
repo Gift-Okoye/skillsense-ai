@@ -50,7 +50,7 @@ export const ApplicationModal = ({ open, onOpenChange, type, title, company }: A
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto mx-6 rounded-3xl">
+      <DialogContent className="sm:max-w-[600px] max-h-[85vh] overflow-y-auto mx-6 rounded-3xl">
         <DialogHeader>
           <DialogTitle className="text-xl md:text-2xl">
             {isJobApplication ? "Quick Apply" : "Enroll Now"}

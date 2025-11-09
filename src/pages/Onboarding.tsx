@@ -122,7 +122,7 @@ const Onboarding = () => {
 
       {/* Auth Modal */}
       <Dialog open={showAuthModal} onOpenChange={setShowAuthModal}>
-        <DialogContent className="sm:max-w-[425px] mx-6 rounded-3xl">
+        <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto mx-6 rounded-3xl">
           <DialogHeader>
             <DialogTitle>Welcome to SkillSense</DialogTitle>
             <DialogDescription>
@@ -209,7 +209,7 @@ const Onboarding = () => {
 
       {/* How It Works Modal */}
       <Dialog open={showHowItWorks} onOpenChange={setShowHowItWorks}>
-        <DialogContent className="sm:max-w-[800px] mx-6 rounded-3xl">
+        <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto mx-6 rounded-3xl">
           <DialogHeader>
             <DialogTitle>How SkillSense Works</DialogTitle>
             <DialogDescription>
