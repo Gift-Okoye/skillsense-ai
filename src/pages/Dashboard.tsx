@@ -345,7 +345,7 @@ const Dashboard = () => {
                 </GlassCard>
 
                 {/* Quick Actions & Analysis Summary (quick_ana_container) */}
-                <div className="space-y-6">
+                <div className="space-y-6 w-[30%]">
                   {/* Quick Actions */}
                   <GlassCard className="animate-fade-in" style={{
                 animationDelay: "200ms"
