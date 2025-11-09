@@ -211,7 +211,7 @@ const Onboarding = () => {
 
       {/* How It Works Modal */}
       <Dialog open={showHowItWorks} onOpenChange={setShowHowItWorks}>
-        <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto mx-6 rounded-3xl">
+        <DialogContent className="w-[calc(100vw-3rem)] sm:max-w-[800px] max-h-[90vh] overflow-y-auto rounded-3xl">
           <DialogHeader>
             <DialogTitle>How SkillSense Works</DialogTitle>
             <DialogDescription>
