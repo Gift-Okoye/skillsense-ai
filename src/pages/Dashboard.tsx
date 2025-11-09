@@ -237,7 +237,7 @@ const Dashboard = () => {
               {/* Add Skill & AI Recommendations Container */}
               <div className="width: from-100% \n">
                 {/* Add New Skill & AI Recommendations (add_rec_container) */}
-                <div className="flex-1 space-y-6">
+                <div className="width: from-100% ">
                   {/* Add New Skill */}
                   <GlassCard className="animate-fade-in">
                     <h3 className="font-semibold mb-3 flex items-center gap-2">
