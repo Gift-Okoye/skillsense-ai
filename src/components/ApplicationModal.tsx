@@ -12,16 +12,21 @@ interface ApplicationModalProps {
   type: "job" | "course";
   title: string;
   company: string;
+  onSuccess?: () => void;
 }
 
-export const ApplicationModal = ({ open, onOpenChange, type, title, company }: ApplicationModalProps) => {
+export const ApplicationModal = ({ open, onOpenChange, type, title, company, onSuccess }: ApplicationModalProps) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phone: "",
     coverLetter: "",
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
   });
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const totalSteps = 3;
   const progress = (step / totalSteps) * 100;
@@ -39,14 +44,31 @@ export const ApplicationModal = ({ open, onOpenChange, type, title, company }: A
   };
 
   const handleSubmit = () => {
-    setStep(4); // Success step
+    setIsProcessing(true);
+    // Simulate payment processing
     setTimeout(() => {
-      onOpenChange(false);
-      setStep(1);
+      setIsProcessing(false);
+      setStep(4); // Success step
+      onSuccess?.();
+      setTimeout(() => {
+        onOpenChange(false);
+        setStep(1);
+        // Reset form
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          coverLetter: "",
+          cardNumber: "",
+          expiryDate: "",
+          cvv: "",
+        });
+      }, 2000);
     }, 2000);
   };
 
   const isJobApplication = type === "job";
+  const coursePrice = "$49.99";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -108,29 +130,106 @@ export const ApplicationModal = ({ open, onOpenChange, type, title, company }: A
               </div>
             )}
 
-            {/* Step 2: Documents */}
+            {/* Step 2: Payment (for courses) or Documents (for jobs) */}
             {step === 2 && (
               <div className="space-y-4 animate-fade-in">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Resume/CV</label>
-                  <div className="border-2 border-dashed border-border rounded-2xl p-8 text-center hover:border-primary transition-smooth cursor-pointer">
-                    <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">
-                      Click to upload or drag and drop
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      PDF, DOC, DOCX (Max 5MB)
-                    </p>
-                  </div>
-                </div>
-                {isJobApplication && (
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Portfolio/LinkedIn (Optional)</label>
-                    <Input
-                      placeholder="https://linkedin.com/in/johndoe"
-                      className="rounded-2xl"
-                    />
-                  </div>
+                {!isJobApplication ? (
+                  <>
+                    <div className="bg-accent/10 border border-accent/20 rounded-2xl p-4 mb-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium">Course Fee</p>
+                          <p className="text-xs text-muted-foreground">One-time payment</p>
+                        </div>
+                        <p className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">{coursePrice}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Card Number</label>
+                      <Input
+                        placeholder="1234 5678 9012 3456"
+                        value={formData.cardNumber}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\s/g, '');
+                          if (value.length <= 16 && /^\d*$/.test(value)) {
+                            const formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+                            setFormData({ ...formData, cardNumber: formatted });
+                          }
+                        }}
+                        className="rounded-2xl"
+                        maxLength={19}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Expiry Date</label>
+                        <Input
+                          placeholder="MM/YY"
+                          value={formData.expiryDate}
+                          onChange={(e) => {
+                            let value = e.target.value.replace(/\D/g, '');
+                            if (value.length >= 2) {
+                              value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                            }
+                            if (value.length <= 5) {
+                              setFormData({ ...formData, expiryDate: value });
+                            }
+                          }}
+                          className="rounded-2xl"
+                          maxLength={5}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">CVV</label>
+                        <Input
+                          type="password"
+                          placeholder="123"
+                          value={formData.cvv}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '');
+                            if (value.length <= 3) {
+                              setFormData({ ...formData, cvv: value });
+                            }
+                          }}
+                          className="rounded-2xl"
+                          maxLength={3}
+                        />
+                      </div>
+                    </div>
+                    <div className="bg-muted/50 rounded-2xl p-4 space-y-2">
+                      <div className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 mt-0.5 text-green-500" />
+                        <div>
+                          <p className="text-sm font-medium">Secure Payment</p>
+                          <p className="text-xs text-muted-foreground">
+                            Your payment information is encrypted and secure
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Resume/CV</label>
+                      <div className="border-2 border-dashed border-border rounded-2xl p-8 text-center hover:border-primary transition-smooth cursor-pointer">
+                        <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">
+                          Click to upload or drag and drop
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          PDF, DOC, DOCX (Max 5MB)
+                        </p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Portfolio/LinkedIn (Optional)</label>
+                      <Input
+                        placeholder="https://linkedin.com/in/johndoe"
+                        className="rounded-2xl"
+                      />
+                    </div>
+                  </>
                 )}
               </div>
             )}
@@ -181,11 +280,17 @@ export const ApplicationModal = ({ open, onOpenChange, type, title, company }: A
               <Button
                 onClick={step === totalSteps ? handleSubmit : handleNext}
                 className="flex-1 rounded-2xl gradient-primary text-white transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+                disabled={isProcessing}
               >
-                {step === totalSteps ? (
+                {isProcessing ? (
+                  <>
+                    <div className="w-4 h-4 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Processing...
+                  </>
+                ) : step === totalSteps ? (
                   <>
                     <Send className="w-4 h-4 mr-2" />
-                    Submit
+                    {isJobApplication ? "Submit Application" : `Pay ${coursePrice}`}
                   </>
                 ) : (
                   "Continue"

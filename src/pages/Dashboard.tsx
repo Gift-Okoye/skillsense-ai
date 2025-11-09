@@ -20,6 +20,7 @@ import { MobileMenu } from "@/components/MobileMenu";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { ApplicationModal } from "@/components/ApplicationModal";
+import { Progress } from "@/components/ui/progress";
 const Dashboard = () => {
   const navigate = useNavigate();
   const {
@@ -146,7 +147,7 @@ const Dashboard = () => {
     salary: "$150k - $180k",
     matchScore: 95,
     postedDate: "2 days ago",
-    applied: false
+    applied: true
   }, {
     id: "2",
     title: "Full Stack Engineer",
@@ -155,7 +156,7 @@ const Dashboard = () => {
     salary: "$130k - $160k",
     matchScore: 88,
     postedDate: "5 days ago",
-    applied: false
+    applied: true
   }, {
     id: "3",
     title: "Frontend Lead",
@@ -247,14 +248,18 @@ const Dashboard = () => {
     postedDate: "2 days ago",
     applied: false
   }]);
-  const courses = [{
+  
+  const [courses, setCourses] = useState([{
     id: "1",
     title: "Advanced TypeScript Patterns",
     provider: "Frontend Masters",
     duration: "6 hours",
     level: "Advanced",
     skillMatch: ["TypeScript", "React.js"],
-    rating: 4.8
+    rating: 4.8,
+    enrolled: true,
+    progress: 65,
+    completed: false
   }, {
     id: "2",
     title: "System Design for Interviews",
@@ -262,7 +267,10 @@ const Dashboard = () => {
     duration: "12 hours",
     level: "Intermediate",
     skillMatch: ["Cloud Architecture", "API Design"],
-    rating: 4.9
+    rating: 4.9,
+    enrolled: true,
+    progress: 100,
+    completed: true
   }, {
     id: "3",
     title: "Leadership in Tech",
@@ -270,7 +278,10 @@ const Dashboard = () => {
     duration: "4 weeks",
     level: "All Levels",
     skillMatch: ["Leadership", "Team Collaboration"],
-    rating: 4.7
+    rating: 4.7,
+    enrolled: true,
+    progress: 30,
+    completed: false
   }, {
     id: "4",
     title: "AWS Solutions Architect",
@@ -278,7 +289,10 @@ const Dashboard = () => {
     duration: "20 hours",
     level: "Intermediate",
     skillMatch: ["Cloud Architecture", "AWS"],
-    rating: 4.9
+    rating: 4.9,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "5",
     title: "React Performance Optimization",
@@ -286,7 +300,10 @@ const Dashboard = () => {
     duration: "8 hours",
     level: "Advanced",
     skillMatch: ["React.js", "TypeScript"],
-    rating: 4.6
+    rating: 4.6,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "6",
     title: "Node.js Microservices",
@@ -294,7 +311,10 @@ const Dashboard = () => {
     duration: "10 hours",
     level: "Intermediate",
     skillMatch: ["Node.js", "API Design"],
-    rating: 4.8
+    rating: 4.8,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "7",
     title: "Advanced SQL Techniques",
@@ -302,7 +322,10 @@ const Dashboard = () => {
     duration: "15 hours",
     level: "Advanced",
     skillMatch: ["SQL", "Python"],
-    rating: 4.7
+    rating: 4.7,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "8",
     title: "Communication for Engineers",
@@ -310,7 +333,10 @@ const Dashboard = () => {
     duration: "3 hours",
     level: "All Levels",
     skillMatch: ["Communication", "Leadership"],
-    rating: 4.5
+    rating: 4.5,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "9",
     title: "GraphQL Complete Guide",
@@ -318,7 +344,10 @@ const Dashboard = () => {
     duration: "12 hours",
     level: "Intermediate",
     skillMatch: ["API Design", "Node.js"],
-    rating: 4.8
+    rating: 4.8,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "10",
     title: "Docker & Kubernetes",
@@ -326,7 +355,10 @@ const Dashboard = () => {
     duration: "18 hours",
     level: "Intermediate",
     skillMatch: ["Cloud Architecture", "Agile Methodologies"],
-    rating: 4.9
+    rating: 4.9,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "11",
     title: "Problem Solving Mastery",
@@ -334,7 +366,10 @@ const Dashboard = () => {
     duration: "5 weeks",
     level: "All Levels",
     skillMatch: ["Problem Solving", "Team Collaboration"],
-    rating: 4.6
+    rating: 4.6,
+    enrolled: false,
+    progress: 0,
+    completed: false
   }, {
     id: "12",
     title: "Full Stack Development",
@@ -342,8 +377,14 @@ const Dashboard = () => {
     duration: "25 hours",
     level: "Advanced",
     skillMatch: ["React.js", "Node.js", "TypeScript"],
-    rating: 4.9
-  }];
+    rating: 4.9,
+    enrolled: false,
+    progress: 0,
+    completed: false
+  }]);
+
+  const [visibleJobs, setVisibleJobs] = useState(8);
+  const [visibleCourses, setVisibleCourses] = useState(8);
   const handleAddSkill = () => {
     if (!newSkill.trim()) return;
     toast({
@@ -353,13 +394,28 @@ const Dashboard = () => {
     setNewSkill("");
   };
   const handleApplyJob = (jobId: string) => {
-    setJobs(prev => prev.map(job => job.id === jobId ? {
-      ...job,
-      applied: true
-    } : job));
+    setApplicationModal({
+      open: true,
+      type: "job",
+      title: jobs.find(j => j.id === jobId)?.title || "",
+      company: jobs.find(j => j.id === jobId)?.company || "",
+    });
+  };
+
+  const handleAutoApply = () => {
+    const unappliedJobs = jobs.filter(job => !job.applied);
+    if (unappliedJobs.length === 0) {
+      toast({
+        title: "All Jobs Applied",
+        description: "You've already applied to all available jobs!"
+      });
+      return;
+    }
+
+    setJobs(prev => prev.map(job => ({ ...job, applied: true })));
     toast({
-      title: "Application Submitted",
-      description: "Your application has been sent successfully!"
+      title: "Auto-Apply Complete",
+      description: `Successfully applied to ${unappliedJobs.length} jobs!`
     });
   };
 
@@ -371,6 +427,42 @@ const Dashboard = () => {
       company: course.provider,
     });
   };
+
+  const handleApplicationSuccess = (type: "job" | "course") => {
+    if (type === "job") {
+      const job = jobs.find(j => j.title === applicationModal.title);
+      if (job) {
+        setJobs(prev => prev.map(j => j.id === job.id ? { ...j, applied: true } : j));
+      }
+    } else {
+      const course = courses.find(c => c.title === applicationModal.title);
+      if (course) {
+        setCourses(prev => prev.map(c => 
+          c.id === course.id 
+            ? { ...c, enrolled: true, progress: 0 } 
+            : c
+        ));
+      }
+    }
+  };
+
+  // Sort jobs: applied first
+  const sortedJobs = [...jobs].sort((a, b) => {
+    if (a.applied && !b.applied) return -1;
+    if (!a.applied && b.applied) return 1;
+    return 0;
+  });
+
+  // Sort courses: enrolled first (completed, then in progress, then not enrolled)
+  const sortedCourses = [...courses].sort((a, b) => {
+    if (a.enrolled && !b.enrolled) return -1;
+    if (!a.enrolled && b.enrolled) return 1;
+    if (a.enrolled && b.enrolled) {
+      if (a.completed && !b.completed) return -1;
+      if (!a.completed && b.completed) return 1;
+    }
+    return 0;
+  });
   return <div className="min-h-screen bg-gradient-to-b from-background via-secondary/30 to-background relative">
       {/* Gradient glow effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[400px] bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.15),transparent_70%)] pointer-events-none" />
@@ -655,86 +747,265 @@ const Dashboard = () => {
         {activeSection === "jobs" && <div className="flex flex-col h-[calc(100vh-12rem)]">
             <div className="flex flex-col items-center mb-6 flex-shrink-0 gap-3">
               <h2 className="text-2xl md:text-3xl font-heading font-bold text-center">Matching Job Opportunities</h2>
-              <Button className="rounded-2xl gradient-primary text-white hidden md:flex">
-                Auto-Apply to All
+              <Button 
+                onClick={handleAutoApply}
+                className="rounded-2xl gradient-primary text-white transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+              >
+                Auto-Apply to All ({jobs.filter(j => !j.applied).length} remaining)
               </Button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 overflow-y-auto flex-1 pr-2">
-              {jobs.map(job => <GlassCard key={job.id} className="animate-fade-in flex flex-col">
-                  <div className="space-y-4 flex-1">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-lg mb-1">{job.title}</h4>
-                        <p className="text-sm text-muted-foreground">{job.company}</p>
-                      </div>
-                      <Badge className="gradient-primary text-white shrink-0">
-                        {job.matchScore}%
-                      </Badge>
-                    </div>
+            <div className="space-y-6 overflow-y-auto flex-1 pr-2">
+              {/* Applied Jobs Section */}
+              {sortedJobs.some(job => job.applied) && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-green-500 flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5" />
+                    Applied Jobs ({sortedJobs.filter(j => j.applied).length})
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                    {sortedJobs.filter(job => job.applied).slice(0, visibleJobs).map(job => (
+                      <GlassCard key={job.id} className="animate-fade-in flex flex-col">
+                        <div className="space-y-4 flex-1">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-lg mb-1">{job.title}</h4>
+                              <p className="text-sm text-muted-foreground">{job.company}</p>
+                            </div>
+                            <Badge className="gradient-primary text-white shrink-0">
+                              {job.matchScore}%
+                            </Badge>
+                          </div>
 
-                    <div className="space-y-2 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-3 h-3" />
-                        {job.location}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <DollarSign className="w-3 h-3" />
-                        {job.salary}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-3 h-3" />
-                        {job.postedDate}
-                      </div>
-                    </div>
-                  </div>
+                          <div className="space-y-2 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-3 h-3" />
+                              {job.location}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <DollarSign className="w-3 h-3" />
+                              {job.salary}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Clock className="w-3 h-3" />
+                              {job.postedDate}
+                            </div>
+                          </div>
+                        </div>
 
-                  <div className="flex gap-2 mt-4 pt-4 border-t border-border">
-                    {job.applied ? <Button size="sm" variant="outline" className="rounded-2xl flex-1" disabled>
-                        <CheckCircle2 className="w-3 h-3 mr-2 text-green-500" />
-                        Applied
-                      </Button> : <Button size="sm" onClick={() => handleApplyJob(job.id)} className="rounded-2xl flex-1 gradient-primary text-white">
-                        Quick Apply
-                      </Button>}
-                    <Button size="sm" variant="outline" className="rounded-2xl">
-                      <ExternalLink className="w-3 h-3" />
-                    </Button>
+                        <div className="flex gap-2 mt-auto pt-4 border-t border-border">
+                          <Button size="sm" variant="outline" className="rounded-2xl flex-1" disabled>
+                            <CheckCircle2 className="w-3 h-3 mr-2 text-green-500" />
+                            Applied
+                          </Button>
+                          <Button size="sm" variant="outline" className="rounded-2xl">
+                            <ExternalLink className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </GlassCard>
+                    ))}
                   </div>
-                </GlassCard>)}
+                </div>
+              )}
+
+              {/* Available Jobs Section */}
+              {sortedJobs.some(job => !job.applied) && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5" />
+                    Available Jobs ({sortedJobs.filter(j => !j.applied).length})
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                    {sortedJobs.filter(job => !job.applied).slice(0, visibleJobs).map(job => (
+                      <GlassCard key={job.id} className="animate-fade-in flex flex-col">
+                        <div className="space-y-4 flex-1">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-lg mb-1">{job.title}</h4>
+                              <p className="text-sm text-muted-foreground">{job.company}</p>
+                            </div>
+                            <Badge className="gradient-primary text-white shrink-0">
+                              {job.matchScore}%
+                            </Badge>
+                          </div>
+
+                          <div className="space-y-2 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-3 h-3" />
+                              {job.location}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <DollarSign className="w-3 h-3" />
+                              {job.salary}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Clock className="w-3 h-3" />
+                              {job.postedDate}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2 mt-auto pt-4 border-t border-border">
+                          <Button 
+                            size="sm" 
+                            onClick={() => handleApplyJob(job.id)} 
+                            className="rounded-2xl flex-1 gradient-primary text-white transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+                          >
+                            Quick Apply
+                          </Button>
+                          <Button size="sm" variant="outline" className="rounded-2xl">
+                            <ExternalLink className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </GlassCard>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Show More Button for Jobs */}
+              {sortedJobs.length > visibleJobs && (
+                <div className="flex justify-center pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setVisibleJobs(prev => prev + 8)}
+                    className="rounded-2xl border-2 transition-smooth hover:scale-[1.02]"
+                  >
+                    Show More Jobs ({sortedJobs.length - visibleJobs} remaining)
+                  </Button>
+                </div>
+              )}
             </div>
           </div>}
 
         {/* Courses Section */}
         {activeSection === "courses" && <div className="flex flex-col h-[calc(100vh-12rem)]">
             <h2 className="text-2xl md:text-3xl font-heading font-bold mb-6 flex-shrink-0 text-center">Recommended Courses</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 overflow-y-auto flex-1 pr-2">
-              {courses.map(course => <GlassCard key={course.id} className="animate-fade-in flex flex-col">
-                  <div className="space-y-4 flex-1">
-                    <div>
-                      <h4 className="font-semibold text-lg mb-1">{course.title}</h4>
-                      <p className="text-sm text-muted-foreground">{course.provider}</p>
-                    </div>
+            <div className="space-y-6 overflow-y-auto flex-1 pr-2">
+              {/* Enrolled Courses Section */}
+              {sortedCourses.some(course => course.enrolled) && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-accent flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5" />
+                    My Courses ({sortedCourses.filter(c => c.enrolled).length})
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                    {sortedCourses.filter(course => course.enrolled).slice(0, visibleCourses).map(course => (
+                      <GlassCard key={course.id} className="animate-fade-in flex flex-col">
+                        <div className="space-y-4 flex-1">
+                          <div>
+                            <div className="flex items-start justify-between mb-1">
+                              <h4 className="font-semibold text-lg flex-1">{course.title}</h4>
+                              {course.completed && (
+                                <Badge className="bg-green-500 text-white shrink-0">
+                                  <CheckCircle2 className="w-3 h-3 mr-1" />
+                                  Done
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground">{course.provider}</p>
+                          </div>
 
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="secondary" className="text-xs">{course.level}</Badge>
-                      <Badge variant="outline" className="text-xs">{course.duration}</Badge>
-                      <Badge variant="outline" className="text-xs">⭐ {course.rating}</Badge>
-                    </div>
+                          {!course.completed && (
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-xs">
+                                <span className="text-muted-foreground">Progress</span>
+                                <span className="font-semibold">{course.progress}%</span>
+                              </div>
+                              <Progress value={course.progress} className="h-2" />
+                            </div>
+                          )}
 
-                    <div className="space-y-2">
-                      <p className="text-xs text-muted-foreground">Strengthens:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {course.skillMatch.map((skill, idx) => <Badge key={idx} className="text-xs bg-accent/10 text-accent border-accent/20">
-                            {skill}
-                          </Badge>)}
-                      </div>
-                    </div>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge variant="secondary" className="text-xs">{course.level}</Badge>
+                            <Badge variant="outline" className="text-xs">{course.duration}</Badge>
+                            <Badge variant="outline" className="text-xs">⭐ {course.rating}</Badge>
+                          </div>
+
+                          <div className="space-y-2">
+                            <p className="text-xs text-muted-foreground">Strengthens:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {course.skillMatch.map((skill, idx) => (
+                                <Badge key={idx} className="text-xs bg-accent/10 text-accent border-accent/20">
+                                  {skill}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          className="rounded-2xl w-full mt-auto transition-smooth hover:scale-[1.02]"
+                        >
+                          {course.completed ? "Review Course" : "Continue Learning"}
+                        </Button>
+                      </GlassCard>
+                    ))}
                   </div>
+                </div>
+              )}
 
-                  <Button size="sm" onClick={() => handleEnrollCourse(course)} className="rounded-2xl w-full gradient-primary text-white mt-4 transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]">
-                    <GraduationCap className="w-3 h-3 mr-2" />
-                    Enroll Now
+              {/* Available Courses Section */}
+              {sortedCourses.some(course => !course.enrolled) && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5" />
+                    Recommended For You ({sortedCourses.filter(c => !c.enrolled).length})
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                    {sortedCourses.filter(course => !course.enrolled).slice(0, visibleCourses).map(course => (
+                      <GlassCard key={course.id} className="animate-fade-in flex flex-col">
+                        <div className="space-y-4 flex-1">
+                          <div>
+                            <h4 className="font-semibold text-lg mb-1">{course.title}</h4>
+                            <p className="text-sm text-muted-foreground">{course.provider}</p>
+                          </div>
+
+                          <div className="flex flex-wrap gap-2">
+                            <Badge variant="secondary" className="text-xs">{course.level}</Badge>
+                            <Badge variant="outline" className="text-xs">{course.duration}</Badge>
+                            <Badge variant="outline" className="text-xs">⭐ {course.rating}</Badge>
+                          </div>
+
+                          <div className="space-y-2">
+                            <p className="text-xs text-muted-foreground">Strengthens:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {course.skillMatch.map((skill, idx) => (
+                                <Badge key={idx} className="text-xs bg-accent/10 text-accent border-accent/20">
+                                  {skill}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <Button 
+                          size="sm" 
+                          onClick={() => handleEnrollCourse(course)} 
+                          className="rounded-2xl w-full gradient-primary text-white mt-auto transition-smooth hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+                        >
+                          <GraduationCap className="w-3 h-3 mr-2" />
+                          Enroll Now
+                        </Button>
+                      </GlassCard>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Show More Button for Courses */}
+              {sortedCourses.length > visibleCourses && (
+                <div className="flex justify-center pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setVisibleCourses(prev => prev + 8)}
+                    className="rounded-2xl border-2 transition-smooth hover:scale-[1.02]"
+                  >
+                    Show More Courses ({sortedCourses.length - visibleCourses} remaining)
                   </Button>
-                </GlassCard>)}
+                </div>
+              )}
             </div>
           </div>}
       </div>
@@ -771,6 +1042,7 @@ const Dashboard = () => {
         type={applicationModal.type}
         title={applicationModal.title}
         company={applicationModal.company}
+        onSuccess={() => handleApplicationSuccess(applicationModal.type)}
       />
     </div>;
 };
