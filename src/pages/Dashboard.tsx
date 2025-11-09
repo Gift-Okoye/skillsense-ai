@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Download, Share2, User, Briefcase, Award, ArrowLeft, Camera, X, Plus, GraduationCap, MapPin, DollarSign, Clock, CheckCircle2, ExternalLink, Sparkles, TrendingUp } from "lucide-react";
 import logo from "@/assets/skillsense-logo.png";
 import aiIcon from "@/assets/ai-assistant-icon.png";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -48,6 +48,32 @@ const Dashboard = () => {
   };
   const [activeSection, setActiveSection] = useState<"skills" | "jobs" | "courses">("skills");
   const [newSkill, setNewSkill] = useState("");
+  const [currentTipIndex, setCurrentTipIndex] = useState(0);
+
+  const aiTips = [
+    {
+      icon: TrendingUp,
+      title: "Skill Gap",
+      description: "Consider learning GraphQL to complement your API design."
+    },
+    {
+      icon: Briefcase,
+      title: "Career Path",
+      description: "On track for Tech Lead role within 2 years."
+    },
+    {
+      icon: GraduationCap,
+      title: "Learning Priority",
+      description: "Focus on System Design and Cloud Architecture."
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTipIndex((prev) => (prev + 1) % aiTips.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
   const mockSkills = {
     hard: [{
       name: "React.js",
@@ -264,27 +290,32 @@ const Dashboard = () => {
                       <h2 className="text-xl font-heading font-semibold">AI Tips</h2>
                     </div>
                     
-                    <div className="space-y-3 max-h-[280px] overflow-y-auto pr-2">
-                      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-3 space-y-1">
+                    <div className="relative">
+                      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-4 space-y-2 min-h-[120px] animate-fade-in" key={currentTipIndex}>
                         <div className="flex items-center gap-2">
-                          <TrendingUp className="w-4 h-4 text-accent" />
-                          <h4 className="font-semibold text-sm">Skill Gap</h4>
+                          {(() => {
+                            const Icon = aiTips[currentTipIndex].icon;
+                            return <Icon className="w-4 h-4 text-accent" />;
+                          })()}
+                          <h4 className="font-semibold text-sm">{aiTips[currentTipIndex].title}</h4>
                         </div>
-                        <p className="text-xs text-muted-foreground">Consider learning GraphQL to complement your API design.</p>
+                        <p className="text-xs text-muted-foreground">{aiTips[currentTipIndex].description}</p>
                       </div>
-                      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-3 space-y-1">
-                        <div className="flex items-center gap-2">
-                          <Briefcase className="w-4 h-4 text-accent" />
-                          <h4 className="font-semibold text-sm">Career Path</h4>
-                        </div>
-                        <p className="text-xs text-muted-foreground">On track for Tech Lead role within 2 years.</p>
-                      </div>
-                      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-3 space-y-1">
-                        <div className="flex items-center gap-2">
-                          <GraduationCap className="w-4 h-4 text-accent" />
-                          <h4 className="font-semibold text-sm">Learning Priority</h4>
-                        </div>
-                        <p className="text-xs text-muted-foreground">Focus on System Design and Cloud Architecture.</p>
+                      
+                      <div className="flex justify-center gap-2 mt-4">
+                        {aiTips.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentTipIndex(index)}
+                            className={cn(
+                              "w-2 h-2 rounded-full transition-all duration-300",
+                              currentTipIndex === index 
+                                ? "bg-accent w-6" 
+                                : "bg-accent/30 hover:bg-accent/50"
+                            )}
+                            aria-label={`Go to tip ${index + 1}`}
+                          />
+                        ))}
                       </div>
                     </div>
                   </GlassCard>
