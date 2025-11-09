@@ -291,7 +291,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Profile Card */}
-                <GlassCard className="animate-scale-in text-center w-[60%] flex-shrink-0">
+                <GlassCard className="animate-scale-in text-center w-[30%] flex-shrink-0">
                   <div className="space-y-6">
                   <div className="relative group cursor-pointer mx-auto w-24" onClick={() => fileInputRef.current?.click()}>
                     <Avatar className="w-24 h-24 border-4 border-primary/20">
