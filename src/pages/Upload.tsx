@@ -138,7 +138,8 @@ const Upload = () => {
             <img 
               src={logo} 
               alt="SkillSense Logo" 
-              className="h-8 md:h-10 w-auto"
+              className="h-8 md:h-10 w-auto cursor-pointer"
+              onClick={() => navigate("/")}
             />
           </div>
           <div className="hidden md:block">

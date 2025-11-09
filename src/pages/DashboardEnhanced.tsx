@@ -188,7 +188,8 @@ const DashboardEnhanced = () => {
             <img 
               src={logo} 
               alt="SkillSense Logo" 
-              className="h-8 md:h-10 w-auto"
+              className="h-8 md:h-10 w-auto cursor-pointer"
+              onClick={() => navigate("/")}
             />
             <div className="ml-2 md:ml-4 hidden sm:block">
               <h1 className="text-xl md:text-2xl font-heading font-bold">Enhanced Dashboard</h1>

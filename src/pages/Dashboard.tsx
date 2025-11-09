@@ -367,7 +367,7 @@ const Dashboard = () => {
             <Button variant="ghost" size="icon" onClick={() => navigate("/analysis")} className="rounded-2xl hover:bg-secondary hover:text-foreground">
               <ArrowLeft className="w-5 h-5 text-foreground" />
             </Button>
-            <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto" />
+            <img src={logo} alt="SkillSense Logo" className="h-8 md:h-10 w-auto cursor-pointer" onClick={() => navigate("/")} />
           </div>
 
           {/* Desktop Navigation */}
